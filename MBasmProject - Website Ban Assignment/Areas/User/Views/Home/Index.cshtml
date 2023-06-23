@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    ViewBag.ColorNav = "header-inner-pages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section htmlstyle {
+    <link href="~/assets/css/ProfileCard.css" rel="stylesheet" />
+    <link href="~/assets/css/Table.css" rel="stylesheet" />
+    <link href="~/assets/css/RadioBtn.css" rel="stylesheet" />
+    <link href="~/assets/css/ProfileUser.css" rel="stylesheet" />
+}
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+}
+
+<img class="vertical-img" src="~/assets/img/elements/Dark Gray Simple Happy Pi Day Flyer (1).png" />
+
+<section class="profile-container">
+    <div class="container" style="margin-bottom: 70px;">
+        @*<h1 class="mb-5">Account Settings</h1>*@
+        <div class="bg-white rounded-lg d-block d-sm-flex profile-detail" style="margin-bottom: 70px;">
+            <div class="profile-tab-nav border-right">
+                <div class="p-4">
+                    <div class="img-square text-center mb-3">
+                        <img src="~/assets/img/ins1.jpg" alt="Image" class="shadow">
+                    </div>
+                    <h4 class="text-center" style=" margin-top: 70px; ">Bui Minh</h4>
+                </div>
+                <div class="selection-container nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="myfiles-tab" data-toggle="pill" href="#myfiles" role="tab" aria-controls="myfiles" aria-selected="true">
+                        <i class="fa-solid fa-file"></i>
+                        My Files
+                    </a>
+                    <a class="nav-link" id="savedfiles-tab" data-toggle="pill" href="#savedfiles" role="tab" aria-controls="savedfiles" aria-selected="false">
+                        <i class="fa-solid fa-bookmark"></i>
+                        Saved Files
+                    </a>
+                    <a class="nav-link" id="security-tab" data-toggle="pill" href="#security" role="tab" aria-controls="security" aria-selected="false">
+                        <i class="fa-solid fa-user-pen"></i>
+                        My Account
+                    </a>
+                    <a class="nav-link" id="password-tab" data-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
+                        <i class="fa-solid fa-bookmark"></i>
+                        Password
+                    </a>
+                </div>
+            </div>
+            <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+
+
+                <div class="tab-pane fade show active" id="myfiles" role="tabpanel" aria-labelledby="myfiles-tab">
+                    @Html.Action("MyFiles")
+                </div>
+
+
+                <div class="tab-pane fade" id="savedfiles" role="tabpanel" aria-labelledby="savedfiles-tab">
+                    @Html.Action("SavedFiles")
+                </div>
+
+
+                <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                    @Html.Action("MyAccount")
+                </div>
+
+                <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+                    @Html.Action("ChangePassword")
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

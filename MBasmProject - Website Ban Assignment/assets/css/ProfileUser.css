@@ -1,0 +1,82 @@
+﻿@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+
+/*body {
+    background: #f9f9f9;
+    font-family: "Roboto", sans-serif;
+}*/
+.nav-pills a.nav-link.active {
+    color: black;
+    background-color: #ffc451;
+}
+.vertical-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+.profile-container {
+    margin: 0 !important;
+    /*background-image: url('/assets/img/elements/Dark Gray Simple Happy Pi Day Flyer.png');*/
+}
+.profile-detail {
+    border-radius: 5px;
+}
+.shadow {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.profile-tab-nav {
+    min-width: 250px;
+}
+
+.tab-content {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.nav-pills a.nav-link {
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    color: #333;
+    /*border-radius: 200px;*/
+}
+
+    .nav-pills a.nav-link i {
+        width: 20px;
+    }
+
+.img-square img {
+    height: 150px;
+    width: 150px;
+    border-radius: 10%;
+    border: 5px solid #fff;
+}
+.nav-pills a:last-of-type {
+    margin-bottom: 25px;
+}
+.img-square {
+    margin-top: -100px;
+    position: absolute;
+    margin-left: 27.5px;
+}
+.btn-unique {
+    background: #dadde0;
+    color: black;
+    border: none;
+    font-weight: 500;
+}
+    .btn-unique:hover {
+        background: #ffc451;
+    }
+
+@media screen and (max-width: 575.5px) {
+    .img-square {
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

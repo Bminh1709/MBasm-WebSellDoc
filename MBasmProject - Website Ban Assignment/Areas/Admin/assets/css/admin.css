@@ -1,0 +1,15 @@
+﻿.paragraphWrap {
+    height: fit-content;
+    max-height: 120px;
+    word-break: break-word;
+    white-space: normal;
+    overflow-x: hidden;
+}
+.table > :not(caption) > * > * {
+    padding: 16px 10px !important;
+}
+.img-tiniPreview {
+    height:120px;
+    width:95px;
+    object-fit:cover;
+}

@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "Subject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section htmlstyle {
+    <link href="~/assets/css/searchingBar.css" rel="stylesheet" />
+    <link href="~/assets/css/filterSearching.css" rel="stylesheet" />
+}
+
+<main id="main" style="background-image: url('/assets/img/elements/Dark Gray Simple Happy Pi Day Flyer.png');">
+
+    <section class="inner-page" style="margin-top: 0">
+
+        <h1 class="title--main" style="margin-top:120px;">Search for your <span> subject </span>below</h1>
+
+
+
+        <div class="s013">
+            <form>
+                <div class="inner-form">
+                    <div class="left">
+                        <div class="input-wrap first">
+                            <div class="input-field first">
+                                @*<label>WHAT</label>*@
+                                <input type="text" placeholder="ex: 1631, AEG1150..." style="padding: unset;" />
+                            </div>
+                        </div>
+                        <div class="input-wrap second">
+                            <div class="input-field second">
+                                @*<label>Grade</label>*@
+                                <div class="input-select">
+                                    <select data-trigger="" class="decorated" name="choices-single-defaul">
+                                        <option placeholder="">All Subjects</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-wrap second">
+                            <div>
+                                <div class="input-select">
+                                    <select data-trigger="" class="decorated" name="choices-single-defaul">
+                                        <option placeholder="">All Grades</option>
+                                        <option>P - Pass</option>
+                                        <option>M - Merit</option>
+                                        <option>D - Distinction</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-search" type="button">SEARCH</button>
+                </div>
+            </form>
+        </div>
+
+
+
+
+
+        <!-- ======= Team Section ======= -->
+        <section id="team" class="team" style="background:none; margin-top:35px;">
+            <div class="container" data-aos="fade-up">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+                        <div class="member" data-aos="fade-up" data-aos-delay="100">
+                            <div class="member-img">
+                                <img src="~/assets/img/team/Minh.png" class="img-fluid" alt="">
+                                <div class="social">
+                                    <a href=""><i class="fa-solid fa-circle-info"></i></a>
+                                    <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                                    <a href=""><i class="fa-solid fa-bookmark"></i></a>
+                                </div>
+                            </div>
+                            <div class="member-info">
+                                <h4>Bùi Minh</h4>
+                                <span>Founder</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+                        <div class="member" data-aos="fade-up" data-aos-delay="200">
+                            <div class="member-img">
+                                <img src="~/assets/img/team/Minh.png" class="img-fluid" alt="">
+                                <div class="social">
+                                    <a href=""><i class="fa-solid fa-circle-info"></i></a>
+                                    <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                                    <a href=""><i class="fa-solid fa-bookmark"></i></a>
+                                </div>
+                            </div>
+                            <div class="member-info">
+                                <h4>Sarah Jhonson</h4>
+                                <span>Product Manager</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+                        <div class="member" data-aos="fade-up" data-aos-delay="300">
+                            <div class="member-img">
+                                <img src="~/assets/img/team/Minh.png" class="img-fluid" alt="">
+                                <div class="social">
+                                    <a href=""><i class="fa-solid fa-circle-info"></i></a>
+                                    <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                                    <a href=""><i class="fa-solid fa-bookmark"></i></a>
+                                </div>
+                            </div>
+                            <div class="member-info">
+                                <h4>William Anderson</h4>
+                                <span>CTO</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+                        <div class="member" data-aos="fade-up" data-aos-delay="400">
+                            <div class="member-img">
+                                <img src="~/assets/img/team/Minh.png" class="img-fluid" alt="">
+                                <div class="social">
+                                    <a href=""><i class="fa-solid fa-circle-info"></i></a>
+                                    <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                                    <a href=""><i class="fa-solid fa-bookmark"></i></a>
+                                </div>
+                            </div>
+                            <div class="member-info">
+                                <h4>Amanda Jepson</h4>
+                                <span>Accountant</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </section><!-- End Team Section -->
+
+    </section>
+</main><!-- End #main -->

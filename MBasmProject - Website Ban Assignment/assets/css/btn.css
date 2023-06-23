@@ -1,0 +1,33 @@
+﻿.btn-hover {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    border: none;
+    /*border: 1px solid #ffc451;*/
+    background: none;
+    width: fit-content;
+    /*border-radius: 50px;*/
+    padding: 7px 15px;
+    border: 1px solid #ffc451;
+}
+/*    .btn-hover:hover {
+        border: 1px solid #ffc451;
+    }
+*/
+/*
+    .btn-hover::before {
+        margin-left: auto;
+    }
+
+    .btn-hover::after, .btn-hover::before {
+        content: '';
+        width: 0%;
+        height: 2px;
+        background: #ffc451;
+        display: block;
+        transition: 0.5s;
+    }
+
+    .btn-hover:hover::after, .btn-hover:hover::before {
+        width: 100%;
+    }*/

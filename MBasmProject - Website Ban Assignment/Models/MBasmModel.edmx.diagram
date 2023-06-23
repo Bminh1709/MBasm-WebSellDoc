@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9cfab4dd9d014980abb8d381c7237f85" Name="Diagram1">
+        <EntityTypeShape EntityType="MBasm_AssignmentsModel.Admin" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBasm_AssignmentsModel.Assignment" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBasm_AssignmentsModel.Category" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBasm_AssignmentsModel.Feedback" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBasm_AssignmentsModel.Order" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBasm_AssignmentsModel.Order_Detail" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MBasm_AssignmentsModel.User" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <AssociationConnector Association="MBasm_AssignmentsModel.FK_Assignment_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="MBasm_AssignmentsModel.FK_Order_Detail_Assignment" ManuallyRouted="false" />
+        <AssociationConnector Association="MBasm_AssignmentsModel.FK_Feedback_User" ManuallyRouted="false" />
+        <AssociationConnector Association="MBasm_AssignmentsModel.FK_Order_Detail_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="MBasm_AssignmentsModel.FK_Order_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

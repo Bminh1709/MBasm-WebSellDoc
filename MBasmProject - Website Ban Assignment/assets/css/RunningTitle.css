@@ -1,0 +1,14 @@
+﻿
+.runningTitle-container {
+    color: #fff;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+    .runningTitle-container h2 {
+        font-size: 80px;
+        font-weight: 600;
+    }
+    .runningTitle-container span {
+        color: #ffc451;
+    }

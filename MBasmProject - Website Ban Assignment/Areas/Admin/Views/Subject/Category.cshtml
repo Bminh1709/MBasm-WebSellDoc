@@ -1,0 +1,127 @@
+﻿@model IEnumerable<MBasmProject___Website_Ban_Assignment.Models.Category>
+
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="card w-100">
+    <div class="card-body p-4">
+        <div style="display:flex; justify-content:space-between;">
+            <h5 class="card-title fw-semibold mb-4">Category Management</h5>
+            <!-- Button trigger modal -->
+            <button style=" height: fit-content;" type="button" id="btnShowCatForm" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Add
+            </button>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-nowrap mb-0 align-middle">
+                <thead class="text-dark fs-4">
+                    <tr>
+                        <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">Id</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">Category Name</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">Description</h6>
+                        </th>
+                        <th class="border-bottom-0" style="width: 0;">
+                            <h6 class="fw-semibold mb-0">Edit</h6>
+                        </th>
+                        <th class="border-bottom-0" style="width: 0;">
+                            <h6 class="fw-semibold mb-0">Delete</h6>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="trow_@item.Id">
+                            <td class="border-bottom-0"><h6 class="fw-semibold mb-0">@item.Id</h6></td>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">@item.Name</h6>
+                            </td>
+                            <td class="border-bottom-0">
+                                <p class="mb-0 fw-normal">@item.Description</p>
+                            </td>
+                            <td class="border-bottom-0" style="text-align:center;">
+                                <a data-id="@item.Id" class="btnEditCat">
+                                    <i data-bs-toggle="modal" data-bs-target="#exampleModal1" style="cursor: pointer;" class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                            </td>
+                            <td class="border-bottom-0" style="text-align:center;">
+                                <a data-id="@item.Id" class="btnDeleteCat">
+                                    <i style="cursor: pointer;" class="fa-regular fa-trash-can"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create a new category</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="CategoryForm" name="frmAddCat" onsubmit="return formValidCat();">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" name="Name" class="form-control" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Description</label>
+                        <input type="text" name="Description" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="btnAddCat" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel1">Update category information</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="CategoryFormUpdate" name="" onsubmit="return formValidCat();">
+                    <div class="mb-3">
+                        <label class="form-label">Id</label>
+                        <input disabled name="Id" id="InputCatId" class="form-control" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input id="InputCatName" type="text" name="Name" class="form-control" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Description</label>
+                        <input id="InputCatDescription" type="text" name="Description" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="btnUpdateCat" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/ScriptsAjax/Category.js")"></script>
+}
