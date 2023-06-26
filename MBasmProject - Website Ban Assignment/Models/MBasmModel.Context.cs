@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MBasmProject___Website_Ban_Assignment.Models
+namespace MBasmProject.Models
 {
     using System;
     using System.Data.Entity;

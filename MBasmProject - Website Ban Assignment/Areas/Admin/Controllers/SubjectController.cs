@@ -4,13 +4,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MBasmProject___Website_Ban_Assignment.Models;
+using MBasmProject.Models;
 using System.IO;
 using System.Reflection;
-using MBasmProject___Website_Ban_Assignment.Filter.Helper;
+using MBasmProject.Filter.Helper;
 using System.Runtime.Remoting.Messaging;
+using System.Data.Entity.Infrastructure;
 
-namespace MBasmProject___Website_Ban_Assignment.Areas.Admin.Controllers
+namespace MBasmProject.Areas.Admin.Controllers
 {
     public class SubjectController : Controller
     {
@@ -194,6 +195,32 @@ namespace MBasmProject___Website_Ban_Assignment.Areas.Admin.Controllers
                 }
             }
         }
+
+        public ActionResult GetAsmById(int id)
+        {
+            MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities();
+            var item = db.Assignments.Find(id);
+            return new CustomJsonResult
+            {
+                Data = new { data = item }
+            };
+        }
+        //public ActionResult GetAsmById(int id)
+        //{
+        //    using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
+        //    {
+        //        var assignment = db.Assignments.Find(id);
+
+        //        if (assignment != null)
+        //        {
+        //            var categoryName = assignment.Category != null ? assignment.Category.Name : string.Empty;
+        //            return Json(new { data = assignment, categoryName }, JsonRequestBehavior.AllowGet);
+        //        }
+
+        //        return Json(new { data = assignment }, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+
 
         [HttpPost]
         public ActionResult DeleteAsm(int id)

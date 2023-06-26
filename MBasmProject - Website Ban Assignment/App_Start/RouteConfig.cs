@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace MBasmProject___Website_Ban_Assignment
+namespace MBasmProject
 {
     public class RouteConfig
     {
@@ -17,7 +17,7 @@ namespace MBasmProject___Website_Ban_Assignment
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: new[] { "MBasmProject___Website_Ban_Assignment.Controllers" }
+                namespaces: new[] { "MBasmProject.Controllers" }
             );
         }
     }

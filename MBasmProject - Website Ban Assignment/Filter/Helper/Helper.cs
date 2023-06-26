@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace MBasmProject___Website_Ban_Assignment.Filter.Helper
+namespace MBasmProject.Filter.Helper
 {
     public class Helper
     {

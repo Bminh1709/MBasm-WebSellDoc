@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MBasmProject___Website_Ban_Assignment.Areas.User.Controllers
+namespace MBasmProject.Areas.User.Controllers
 {
     public class HomeController : Controller
     {
