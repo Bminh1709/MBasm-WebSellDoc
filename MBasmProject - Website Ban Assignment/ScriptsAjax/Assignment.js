@@ -37,22 +37,34 @@
             }
         });
     });
-    // GET CAT ON FORM
-    $('body').on('click', '.btnEditCat', function () {
+    // GET ASM ON FORM
+    $('body').on('click', '.btnEditAsm', function () {
         var tmpId = $(this).data("id");
         $.ajax({
-            url: '/Admin/Subject/GetCatById',
-            type: 'Get',
+            url: '/Admin/Subject/GetAsmById',
+            type: 'GET',
             data: { id: tmpId },
             success: function (rs) {
-                if (rs.data != null) {
-                    $('#InputCatId').val(rs.data.Id);
-                    $('#InputCatName').val(rs.data.Name);
-                    $('#InputCatDescription').val(rs.data.Description);
+                if (rs.data != null && rs.categoryName != null) {
+                    console.log(rs.data);
+                    $('#InputAsmTitle').val(rs.data.Title);
+                    $('#InputAsmCat').val(rs.categoryName); // Assuming categoryName is included in the JSON response
+                    $('#InputAsmDes').val(rs.data.Description);
+                    $('#InputAsmGrade').val(rs.data.Grade);
+                    $('#InputAsmPrice').val(rs.data.Price);
+                    $('#InputAsmHot').prop('checked', rs.data.Hot);
                 }
+            },
+            error: function (xhr, status, error) {
+                // Display error message
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+                alert('Error: ' + error);
             }
         });
     });
+
     // AFTER GET CAT => EDIT
     $('#CategoryFormUpdate').on('submit', function (e) {
         // Hide params on link

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MBasmProject___Website_Ban_Assignment.Areas.Admin.Controllers
+namespace MBasmProject.Areas.Admin.Controllers
 {
     public class AccessController : Controller
     {

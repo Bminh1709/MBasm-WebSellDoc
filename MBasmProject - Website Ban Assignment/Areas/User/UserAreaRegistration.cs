@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace MBasmProject___Website_Ban_Assignment.Areas.User
+namespace MBasmProject.Areas.User
 {
     public class UserAreaRegistration : AreaRegistration 
     {
@@ -18,7 +18,7 @@ namespace MBasmProject___Website_Ban_Assignment.Areas.User
                 "User_default",
                 "User/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional },
-                new[] { "MBasmProject___Website_Ban_Assignment.Areas.User.Controllers" }
+                new[] { "MBasmProject.Areas.User.Controllers" }
             );
         }
     }

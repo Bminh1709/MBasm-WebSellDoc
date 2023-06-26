@@ -1,5 +1,5 @@
-﻿@model IEnumerable<MBasmProject___Website_Ban_Assignment.Models.Assignment>
-@using MBasmProject___Website_Ban_Assignment.Models
+﻿@model IEnumerable<MBasmProject.Models.Assignment>
+@using MBasmProject.Models
 
 @{
     ViewBag.Title = "Assignment";
@@ -99,8 +99,8 @@
                                 <p class="mb-0 fw-normal">@string.Format("{0:dd/MM/yy}", item.UpdatedDate)</p>
                             </td>
                             <td class="border-bottom-0" style="text-align:center;">
-                                <a class="btnEditCat">
-                                    <i data-bs-toggle="modal" @*data-bs-target="#exampleModal1"*@ style="cursor: pointer;" class="fa-regular fa-pen-to-square"></i>
+                                <a data-id="@item.Id" class="btnEditAsm">
+                                    <i data-bs-toggle="modal" data-bs-target="#formAsmModalUpdate" style="cursor: pointer;" class="fa-regular fa-pen-to-square"></i>
                                 </a>
                             </td>
                             <td class="border-bottom-0" style="text-align:center;">
@@ -117,7 +117,7 @@
 </div>
 
 
-<!-- Modal -->
+<!-- Modal create-->
 <div class="modal fade" id="formAsmModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -129,21 +129,22 @@
                 <form id="AssignmentForm" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label">Title</label>
-                        <input id="InputCatName" type="text" name="Title" class="form-control">
+                        <input type="text" name="Title" class="form-control">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Category</label>
-                        <select name="Category_id" class="form-control">
-                            <option value="">Select an option</option>
-                            @foreach (var item in ViewData["lstCat"] as IEnumerable<MBasmProject___Website_Ban_Assignment.Models.Category>)
+                        <select id="InputAsmCat" name="Category_id" class="form-control">
+                            <option value="InputAsmCat">Select an option</option>
+                            @foreach (var item in ViewData["lstCat"] as IEnumerable<MBasmProject.Models.Category>)
                             {
                                 <option value="@item.Id">@item.Name</option>
                             }
                         </select>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label">Description</label>
-                        <input id="InputCatName" type="text" name="Description" class="form-control">
+                        <input type="text" name="Description" class="form-control">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Grade</label>
@@ -156,7 +157,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Price</label>
-                        <input id="InputCatName" type="number" name="Price" class="form-control">
+                        <input type="number" name="Price" class="form-control">
                     </div>
                     <div class="form-check form-switch mb-3">
                         <input class="form-check-input" type="checkbox" value="True" name="Hot">
@@ -188,7 +189,80 @@
     </div>
 </div>
 
+
+
+<!-- Modal update-->
+<div class="modal fade" id="formAsmModalUpdate" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Update assignment's info</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form @*id="AssignmentForm" enctype="multipart/form-data"*@>
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input id="InputAsmTitle" type="text" name="Title" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select name="Category_id" class="form-control">
+                            <option value="InputAsmCat">Select an option</option>
+                            @foreach (var item in ViewData["lstCat"] as IEnumerable<MBasmProject.Models.Category>)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <input id="InputAsmDes" type="text" name="Description" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Grade</label>
+                        <select value="InputAsmGrade" name="Grade" class="form-select">
+                            <option value="">Undefined</option>
+                            <option value="P">P</option>
+                            <option value="M">M</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Price</label>
+                        <input id="InputAsmPrice" type="number" name="Price" class="form-control">
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input id="InputAsmHot" class="form-check-input" type="checkbox" value="True" name="Hot">
+                        <label class="form-check-label">Check if the assignment is hot!</label>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">File Word</label>
+                        <input id="InputAsmFileDocx" type="file" name="FileDocx" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">File Pdf</label>
+                        <input id="InputAsmFilePdf" type="file" name="FilePdf" accept="application/pdf" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">File Powerpoint</label>
+                        <input id="InputAsmPptx" type="file" name="FilePptx" accept="application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation" class="form-control">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Images</label>
+                        <input id="InputAsmImages" type="file" multiple name="images" accept="image/*" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts {
-    <script src="~/ScriptsAjax/Assignment.js"></script>
+    <script type="text/javascript" src="@Url.Content("~/ScriptsAjax/Assignment.js")"></script>
 }
 
