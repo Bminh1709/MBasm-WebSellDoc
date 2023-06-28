@@ -13,3 +13,9 @@
     width:95px;
     object-fit:cover;
 }
+.btn-uploadFile {
+    margin-left: 7px;
+    width: 60px;
+    font-size: 13px;
+    padding: 7px;
+}

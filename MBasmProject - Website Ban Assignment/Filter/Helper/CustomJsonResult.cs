@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 
 namespace MBasmProject.Filter.Helper
 {
+    // Fix error: A circular reference was detected while serializing an object of type is still exist
     public class CustomJsonResult : JsonResult
     {
         public CustomJsonResult()

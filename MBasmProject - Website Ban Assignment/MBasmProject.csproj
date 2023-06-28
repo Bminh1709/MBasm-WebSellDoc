@@ -44,9 +44,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-	<PropertyGroup>
-		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-	</PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -585,7 +585,12 @@
     <Content Include="assets\img\Asm\8,12.png" />
     <Content Include="assets\img\Asm\Bảng điểm Lis.jpg" />
     <Content Include="assets\img\Asm\Bảng điểm Read.jpg" />
+    <Content Include="assets\img\Asm\CL-end.png" />
     <Content Include="assets\img\Asm\Listening Test.png" />
+    <Content Include="assets\img\Asm\No-Image.svg.png" />
+    <Content Include="assets\img\Asm\WIN_20211102_08_19_18_Pro.jpg" />
+    <Content Include="assets\img\Asm\WIN_20220107_08_13_20_Pro.jpg" />
+    <Content Include="assets\img\Asm\WIN_20220107_09_21_35_Pro.jpg" />
     <Content Include="assets\img\clients\client-1.png" />
     <Content Include="assets\img\clients\client-2.png" />
     <Content Include="assets\img\clients\client-3.png" />
