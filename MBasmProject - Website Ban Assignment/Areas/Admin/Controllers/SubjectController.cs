@@ -198,28 +198,39 @@ namespace MBasmProject.Areas.Admin.Controllers
 
         public ActionResult GetAsmById(int id)
         {
-            MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities();
-            var item = db.Assignments.Find(id);
-            return new CustomJsonResult
+            using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
             {
-                Data = new { data = item }
-            };
+                var assignment = db.Assignments.Find(id);
+
+                if (assignment != null)
+                {
+                    var categoryName = assignment.Category != null ? assignment.Category.Name : string.Empty;
+
+                    // Fix error: "The ObjectContext instance has been disposed and can no longer be used for operations that require a connection"
+                    db.Entry(assignment).State = EntityState.Detached; // Detach the assignment object from the database context
+
+                    return new CustomJsonResult
+                    {
+                        Data = new { data = assignment, categoryName }
+                    };
+                }
+
+                return new CustomJsonResult
+                {
+                    Data = new { data = assignment }
+                };
+            }
         }
-        //public ActionResult GetAsmById(int id)
-        //{
-        //    using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
-        //    {
-        //        var assignment = db.Assignments.Find(id);
 
-        //        if (assignment != null)
-        //        {
-        //            var categoryName = assignment.Category != null ? assignment.Category.Name : string.Empty;
-        //            return Json(new { data = assignment, categoryName }, JsonRequestBehavior.AllowGet);
-        //        }
+        [HttpPost]
+        public ActionResult UpdateAsm()
+        {
+            using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
+            {
+                return View();
+            }    
+        }
 
-        //        return Json(new { data = assignment }, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
 
 
         [HttpPost]

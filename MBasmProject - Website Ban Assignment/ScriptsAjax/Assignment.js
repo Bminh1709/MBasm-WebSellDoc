@@ -39,20 +39,80 @@
     });
     // GET ASM ON FORM
     $('body').on('click', '.btnEditAsm', function () {
+
+        // Reset the form
+        $('#AssignmentFormUpdate')[0].reset();
+        $('#ImageContainer').empty();
+
+        $('#InputAsmFileDocxUpdate').hide();
+        $('#InputAsmFileDocx').show();
+        $('#InputAsmFilePdfUpdate').hide();
+        $('#InputAsmFilePdf').show();
+        $('#InputAsmFilePptxUpdate').hide();
+        $('#InputAsmFilePptx').show();
+
+
         var tmpId = $(this).data("id");
         $.ajax({
             url: '/Admin/Subject/GetAsmById',
             type: 'GET',
             data: { id: tmpId },
             success: function (rs) {
-                if (rs.data != null && rs.categoryName != null) {
-                    console.log(rs.data);
+                if (rs.data != null) {
                     $('#InputAsmTitle').val(rs.data.Title);
-                    $('#InputAsmCat').val(rs.categoryName); // Assuming categoryName is included in the JSON response
+                    // Get option of server-side code
+                    $('#InputAsmCat option').filter(function () {
+                        return $(this).text().trim() === rs.categoryName.trim();
+                    }).prop('selected', true);
                     $('#InputAsmDes').val(rs.data.Description);
                     $('#InputAsmGrade').val(rs.data.Grade);
                     $('#InputAsmPrice').val(rs.data.Price);
                     $('#InputAsmHot').prop('checked', rs.data.Hot);
+
+                    // Handle the link to split the GUID part => get the link on device
+                    if (rs.data.FileDocx != null) {
+                        let fileDocx = rs.data.FileDocx.split('_');
+                        if (fileDocx.length > 1) {
+                            var part1 = fileDocx.slice(0, 1)[0];
+                            var part2 = fileDocx.slice(1).join('_');
+                            $('#InputAsmFileDocx').val(part2);
+                        } else {
+                            $('#InputAsmFileDocx').val(rs.data.rs.data.FileDocx);
+                        }
+                    }
+                    if (rs.data.FilePdf != null) {
+                        let filePdf = rs.data.FilePdf.split('_');
+                        if (filePdf.length > 1) {
+                            var part1 = filePdf.slice(0, 1)[0];
+                            var part2 = filePdf.slice(1).join('_');
+                            $('#InputAsmFilePdf').val(part2);
+                        } else {
+                            $('#InputAsmFilePdf').val(rs.data.FilePdf);
+                        }
+                    }
+                    if (rs.data.FilePptx != null) {
+                        let filePptx = rs.data.FilePptx.split('_');
+                        if (filePptx.length > 1) {
+                            var part1 = filePptx.slice(0, 1)[0];
+                            var part2 = filePptx.slice(1).join('_');
+                            $('#InputAsmPptx').val(part2);
+                        } else {
+                            $('#InputAsmPptx').val(rs.data.FilePptx);
+                        }
+                    }
+                    if (rs.data.Images != null && rs.data.Images.length !== 0) {
+                        var imagesData = rs.data.Images;
+                        var images = imagesData.split(',');
+                        for (var i = 0; i < images.length; i++) {
+                            var imgSrc = '/assets/img/Asm/' + images[i];
+                            var imgElement = $('<img>').attr('style', 'height: 150px; width: 100px; object-fit: cover; margin: 10px auto; border: var(--bs-border-width) solid #DFE5EF;').attr('src', imgSrc);
+                            $('#ImageContainer').append(imgElement);
+                        }
+                    }
+                    else {
+                        var imgElement = $('<img>').attr('style', 'height: 150px; width: 100px; object-fit: cover; margin: 10px auto; border: var(--bs-border-width) solid #DFE5EF;').attr('src', "/assets/img/Asm/No-Image.svg.png");
+                        $('#ImageContainer').append(imgElement);
+                    }
                 }
             },
             error: function (xhr, status, error) {
@@ -65,34 +125,24 @@
         });
     });
 
-    // AFTER GET CAT => EDIT
-    $('#CategoryFormUpdate').on('submit', function (e) {
-        // Hide params on link
-        e.preventDefault(); // Prevent the form from submitting normally
-
-        var tmpCategory = {
-            Id: $("#InputCatId").val(),
-            Name: $("#InputCatName").val(),
-            Description: $("#InputCatDescription").val()
-        };
-        $.ajax({
-            url: '/Admin/Subject/UpdateCategory',
-            type: 'POST',
-            data: {
-                category: tmpCategory
-            },
-            success: function (rs) {
-                if (rs.success) {
-                    window.location.reload();
-                    alert("Update category successfully!");
-                }
-                else {
-                    window.location.reload();
-                    alert("Fail to update category!");
-                }
-            }
-        });
+    $('#btnUploadFileDocx').click(function (event) {
+        //event.stopPropagation(); // Prevent the default form submission behavior
+        event.preventDefault();
+        // $('#InputAsmFileDocx').attr('type', 'file');
+        $('#InputAsmFileDocx').hide();
+        $('#InputAsmFileDocxUpdate').show().click();
     });
+    $('#btnUploadFilePdf').click(function (event) {
+        event.preventDefault();
+        $('#InputAsmFilePdf').hide();
+        $('#InputAsmFilePdfUpdate').show().click();
+    });
+    $('#btnUploadFilePptx').click(function (event) {
+        event.preventDefault();
+        $('#InputAsmFilePptx').hide();
+        $('#InputAsmFilePptxUpdate').show().click();
+    });
+
 
     //Delete Asm
     $('body').on('click', '.btnDeleteAsm', function () {

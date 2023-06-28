@@ -65,8 +65,16 @@
                         <tr id="trow_@item.Id">
                             <td class="border-bottom-0"><p class="fw-semibold mb-0">@item.Id</p></td>
                             <td class="border-bottom-0" style=" width: 90px;">
-                                @{ string[] images = item.Images.Split(',');
-                                    <img class="img-tiniPreview" src="~/assets/img/Asm/@images[0]" />
+                                @{ 
+                                    if (!string.IsNullOrEmpty(item.Images))
+                                    {
+                                        string[] images = item.Images.Split(',');
+                                        <img class="img-tiniPreview" src="~/assets/img/Asm/@images[0]" />
+                                    }
+                                    else
+                                    {
+                                        <img class="img-tiniPreview" src="~/assets/img/Asm/No-Image.svg.png" />
+                                    }
                                 }
                             </td>
                             <td class="border-bottom-0">
@@ -192,7 +200,7 @@
 
 
 <!-- Modal update-->
-<div class="modal fade" id="formAsmModalUpdate" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="formAsmModalUpdate" tabindex="-1" aria-hidden="true" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -200,15 +208,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form @*id="AssignmentForm" enctype="multipart/form-data"*@>
+                <form id="AssignmentFormUpdate" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label class="form-label">Title</label>
                         <input id="InputAsmTitle" type="text" name="Title" class="form-control">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Category</label>
-                        <select name="Category_id" class="form-control">
-                            <option value="InputAsmCat">Select an option</option>
+                        <select name="Category_id" id="InputAsmCat" class="form-control">
                             @foreach (var item in ViewData["lstCat"] as IEnumerable<MBasmProject.Models.Category>)
                             {
                                 <option value="@item.Id">@item.Name</option>
@@ -221,7 +228,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Grade</label>
-                        <select value="InputAsmGrade" name="Grade" class="form-select">
+                        <select id="InputAsmGrade" name="Grade" class="form-select">
                             <option value="">Undefined</option>
                             <option value="P">P</option>
                             <option value="M">M</option>
@@ -238,19 +245,32 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">File Word</label>
-                        <input id="InputAsmFileDocx" type="file" name="FileDocx" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="form-control">
+                        <div style="display:flex">
+                            <input id="InputAsmFileDocx" type="text" name="FileDocx" class="form-control" readonly>
+                            <input id="InputAsmFileDocxUpdate" type="file" name="FileDocxUpdate" class="form-control" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display: none">
+                            <button id="btnUploadFileDocx" class="btn btn-primary btn-uploadFile">Upload</button>
+                        </div>
+
                     </div>
                     <div class="mb-3">
                         <label class="form-label">File Pdf</label>
-                        <input id="InputAsmFilePdf" type="file" name="FilePdf" accept="application/pdf" class="form-control">
+                        <div style="display:flex">
+                            <input readonly id="InputAsmFilePdf" type="text" name="FilePdf" class="form-control">
+                            <input id="InputAsmFilePdfUpdate" type="file" name="FilePdfUpdate" class="form-control" accept="application/pdf" style="display: none">
+                            <button id="btnUploadFilePdf" class="btn btn-primary btn-uploadFile">Upload</button>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">File Powerpoint</label>
-                        <input id="InputAsmPptx" type="file" name="FilePptx" accept="application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation" class="form-control">
+                        <div style="display:flex">
+                            <input readonly id="InputAsmFilePptx" type="text" name="FilePptx" class="form-control">
+                            <input id="InputAsmFilePptxUpdate" type="file" name="FilePptxUpdate" class="form-control" accept="application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation"  style="display: none">
+                            <button id="btnUploadFilePptx" class="btn btn-primary btn-uploadFile">Upload</button>
+                        </div>
                     </div>
                     <div class="mb-4">
                         <label class="form-label">Images</label>
-                        <input id="InputAsmImages" type="file" multiple name="images" accept="image/*" class="form-control">
+                        <div id="ImageContainer" style="display: flex; flex-wrap: wrap;"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
