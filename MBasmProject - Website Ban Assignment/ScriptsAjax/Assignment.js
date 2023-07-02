@@ -59,6 +59,7 @@
             data: { id: tmpId },
             success: function (rs) {
                 if (rs.data != null) {
+                    $('#InputAsmId').val(rs.data.Id);
                     $('#InputAsmTitle').val(rs.data.Title);
                     // Get option of server-side code
                     $('#InputAsmCat option').filter(function () {
@@ -95,7 +96,7 @@
                         if (filePptx.length > 1) {
                             var part1 = filePptx.slice(0, 1)[0];
                             var part2 = filePptx.slice(1).join('_');
-                            $('#InputAsmPptx').val(part2);
+                            $('#InputAsmFilePptx').val(part2);
                         } else {
                             $('#InputAsmPptx').val(rs.data.FilePptx);
                         }
@@ -163,10 +164,6 @@
             });
         }
     });
-
-
-
-
 
 
 });

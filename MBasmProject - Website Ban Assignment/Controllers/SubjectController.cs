@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace MBasmProject.Controllers
 {
+    [HandleError]
     public class SubjectController : Controller
     {
         // GET: Subject

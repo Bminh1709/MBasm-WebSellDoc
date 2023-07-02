@@ -1,4 +1,4 @@
-﻿.download-button {
+﻿.profile-button {
     position: relative;
     border-width: 0;
     color: #fff;
@@ -11,13 +11,14 @@
 .docs {
     color: #fff;
 }
-.download i {
-    color: #fff;
-}
-    .download i:hover {
+
+/*.download i:hover {
+    opacity: 1;
+}*/
+    /*.download i:hover {
         color: #ffc451;
-    }
-.download-button .docs {
+    }*/
+.profile-button .docs {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -26,16 +27,17 @@
     padding: 0 10px;
     border-radius: 4px;
     z-index: 1;
-    background-color: #242a35;
-    border: solid 1px #e8e8e82d;
+    /*background-color: #242a35;*/
+    /*border: solid 1px #e8e8e82d;*/
     transition: all .5s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-    .download-button:hover {
-        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    }
+.profile-button:hover {
+    /*box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;*/
+    color: #ffc451;
+}
 
-.download {
+.logout-button {
     position: absolute;
     inset: 0;
     display: flex;
@@ -50,11 +52,23 @@
     transition: all .5s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-.download-button:hover .download {
-    transform: translateY(100%)
-}
+    .logout-button i {
+        color: #fff;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+        .logout-button i:hover {
+            color: #ffc451;
+        }
 
-.download svg polyline, .download svg line {
+.profile-button:hover .logout-button {
+    transform: translateY(100%);
+}
+    .profile-button:hover .logout-button i {
+        opacity: 1;
+    }
+
+.logout-button svg polyline, .logout-button svg line {
     animation: docs 1s infinite;
 }
 

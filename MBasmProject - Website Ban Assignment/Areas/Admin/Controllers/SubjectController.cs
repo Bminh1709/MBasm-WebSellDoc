@@ -13,16 +13,25 @@ using System.Data.Entity.Infrastructure;
 
 namespace MBasmProject.Areas.Admin.Controllers
 {
+    [HandleError]
     public class SubjectController : Controller
     {
         // GET: Admin/Subject
         public ActionResult Category()
         {
-            using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
+            try
             {
-                //Get list Cats
-                List<Category> categories = db.Categories.ToList();
-                return View(categories);
+                using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
+                {
+                    //Get list Cats
+                    List<Category> categories = db.Categories.ToList();
+                    return View(categories);
+                }
+            }
+            catch (Exception e)
+            {
+                //ViewBag.error_msg = e.Message;
+                return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
             }
         }
         [HttpPost]
@@ -45,9 +54,10 @@ namespace MBasmProject.Areas.Admin.Controllers
                     }
 
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    return Json(new { success = false });
+                    //return Json(new { success = false });
+                    return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
                 }
             }
         }
@@ -79,9 +89,10 @@ namespace MBasmProject.Areas.Admin.Controllers
                         return Json(new { success = false });
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    { return Json(new { success = false }); }
+                    // return Json(new { success = false });
+                    return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
                 }
             }
         }
@@ -105,9 +116,10 @@ namespace MBasmProject.Areas.Admin.Controllers
                         return Json(new { success = false });
                     }
                 }
-                catch (Exception)
+                catch (Exception e )
                 {
-                    return Json(new { success = false });
+                    //return Json(new { success = false });
+                    return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
                 }
             }
         }
@@ -189,9 +201,10 @@ namespace MBasmProject.Areas.Admin.Controllers
                     }
 
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    return Json(new { success = false });
+                    //return Json(new { success = false });
+                    return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
                 }
             }
         }
@@ -222,13 +235,101 @@ namespace MBasmProject.Areas.Admin.Controllers
             }
         }
 
-        [HttpPost]
         public ActionResult UpdateAsm()
         {
-            using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
+            try
             {
-                return View();
-            }    
+                using(MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
+                {
+                    List<Category> categories = db.Categories.ToList();
+                    return View(categories);
+                }    
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateAsm(Assignment updateAsm, HttpPostedFileBase FileDocxUpdate, HttpPostedFileBase FilePdfUpdate, HttpPostedFileBase FilePptxUpdate)
+        {
+            try
+            {
+                using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
+                {
+                    var modelFound = db.Assignments.Find(updateAsm.Id);
+                    if (modelFound != null)
+                    {
+                        modelFound.Title = updateAsm.Title;
+                        modelFound.Description = updateAsm.Description;
+                        modelFound.Category_id = updateAsm.Category_id;
+                        modelFound.Grade = updateAsm.Grade;
+                        modelFound.Price = updateAsm.Price;
+                        modelFound.UpdatedDate = DateTime.Now;
+                        modelFound.Hot = updateAsm.Hot ?? false;
+
+                        // Handle file uploads
+                        if (FileDocxUpdate != null)
+                        {
+                            if (modelFound.FileDocx != null)
+                            {
+                                Helper.DeleteFile("~/App_Data/FileDocx", modelFound.FileDocx);
+                            }
+                            // Handle DOCX file upload
+                            if (Helper.IsValidFile(FileDocxUpdate, ".docx"))
+                            {
+                                string fileName = Helper.GenerateUniqueFileName(FileDocxUpdate.FileName);
+                                string filePath = Path.Combine(Server.MapPath("~/App_Data/FileDocx"), fileName);
+                                FileDocxUpdate.SaveAs(filePath);
+                                modelFound.FileDocx = fileName;
+                            }
+                        }
+                        if (FilePdfUpdate != null)
+                        {
+                            if (modelFound.FilePdf != null)
+                            {
+                                Helper.DeleteFile("~/App_Data/FilePdf", modelFound.FilePdf);
+                            }
+                            // Handle Pdf file upload
+                            if (Helper.IsValidFile(FilePdfUpdate, ".pdf"))
+                            {
+                                string fileName = Helper.GenerateUniqueFileName(FilePdfUpdate.FileName);
+                                string filePath = Path.Combine(Server.MapPath("~/App_Data/FilePdf"), fileName);
+                                FilePdfUpdate.SaveAs(filePath);
+                                modelFound.FilePdf = fileName;
+                            }
+                        }
+                        if (FilePptxUpdate != null)
+                        {
+                            if (modelFound.FilePptx != null)
+                            {
+                                Helper.DeleteFile("~/App_Data/FilePptx", modelFound.FilePptx);
+                            }
+                            // Handle Pptx file upload
+                            if (Helper.IsValidFile(FilePptxUpdate, ".pptx"))
+                            {
+                                string fileName = Helper.GenerateUniqueFileName(FilePptxUpdate.FileName);
+                                string filePath = Path.Combine(Server.MapPath("~/App_Data/FilePptx"), fileName);
+                                FilePptxUpdate.SaveAs(filePath);
+                                modelFound.FilePptx = fileName;
+                            }
+                        }
+
+                        db.SaveChanges();
+                        return Json(new { success = true });
+                    }    
+                    else
+                    {
+                        return Json(new { success = false });
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                //return Json(new { success = false });
+                return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
+            }   
         }
 
 
@@ -273,9 +374,10 @@ namespace MBasmProject.Areas.Admin.Controllers
                         return Json(new { success = false });
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    return Json(new { success = false });
+                    //return Json(new { success = false });
+                    return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
                 }
             }
         }

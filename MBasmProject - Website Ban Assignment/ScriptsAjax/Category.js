@@ -24,6 +24,7 @@
                 url: '/Admin/Subject/AddCat',
                 type: 'POST',
                 data: formData,
+                // prevent jQuery from automatically processing the data => Can send file
                 processData: false,
                 contentType: false,
                 success: function (rs) {
@@ -56,6 +57,33 @@
         });
     });
     // AFTER GET CAT => EDIT
+    //$('#CategoryFormUpdate').on('submit', function (e) {
+    //    // Hide params on link
+    //    e.preventDefault(); // Prevent the form from submitting normally
+
+    //    var tmpCategory = {
+    //        Id: $("#InputCatId").val(),
+    //        Name: $("#InputCatName").val(),
+    //        Description: $("#InputCatDescription").val()
+    //    };
+    //    $.ajax({
+    //        url: '/Admin/Subject/UpdateCategory',
+    //        type: 'POST',
+    //        data: {
+    //            category: tmpCategory
+    //        },
+    //        success: function (rs) {
+    //            if (rs.success) {
+    //                window.location.reload();
+    //                alert("Update category successfully!");
+    //            }
+    //            else {
+    //                window.location.reload();
+    //                alert("Fail to update category!");
+    //            }
+    //        }
+    //    });
+    //});
     $('#CategoryFormUpdate').on('submit', function (e) {
         // Hide params on link
         e.preventDefault(); // Prevent the form from submitting normally
