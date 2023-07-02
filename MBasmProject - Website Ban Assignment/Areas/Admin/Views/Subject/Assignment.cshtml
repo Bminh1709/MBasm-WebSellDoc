@@ -18,7 +18,7 @@
             </button>
         </div>
         <div class="table-responsive">
-            <table class="table text-nowrap mb-0">
+            <table class="table text-nowrap table-hover mb-0">
                 <thead class="text-dark fs-4">
                     <tr>
                         <th class="border-bottom-0">
@@ -78,7 +78,7 @@
                                 }
                             </td>
                             <td class="border-bottom-0">
-                                <p class=" mb-0 fw-semibold">@item.Title</p>
+                                <p style="white-space: normal; width:100px;" class=" mb-0 fw-semibold">@item.Title</p>
                             </td>
                             <td class="border-bottom-0">
                                 @* writing a null check before accessing the Name property, helping to avoid null reference exceptions.*@
@@ -141,8 +141,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Category</label>
-                        <select id="InputAsmCat" name="Category_id" class="form-control">
-                            <option value="InputAsmCat">Select an option</option>
+                        <select name="Category_id" class="form-control">
+                            <option>Select an option</option>
                             @foreach (var item in ViewData["lstCat"] as IEnumerable<MBasmProject.Models.Category>)
                             {
                                 <option value="@item.Id">@item.Name</option>
@@ -208,75 +208,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="AssignmentFormUpdate" enctype="multipart/form-data">
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input id="InputAsmTitle" type="text" name="Title" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Category</label>
-                        <select name="Category_id" id="InputAsmCat" class="form-control">
-                            @foreach (var item in ViewData["lstCat"] as IEnumerable<MBasmProject.Models.Category>)
-                            {
-                                <option value="@item.Id">@item.Name</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <input id="InputAsmDes" type="text" name="Description" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Grade</label>
-                        <select id="InputAsmGrade" name="Grade" class="form-select">
-                            <option value="">Undefined</option>
-                            <option value="P">P</option>
-                            <option value="M">M</option>
-                            <option value="D">D</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Price</label>
-                        <input id="InputAsmPrice" type="number" name="Price" class="form-control">
-                    </div>
-                    <div class="form-check form-switch mb-3">
-                        <input id="InputAsmHot" class="form-check-input" type="checkbox" value="True" name="Hot">
-                        <label class="form-check-label">Check if the assignment is hot!</label>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">File Word</label>
-                        <div style="display:flex">
-                            <input id="InputAsmFileDocx" type="text" name="FileDocx" class="form-control" readonly>
-                            <input id="InputAsmFileDocxUpdate" type="file" name="FileDocxUpdate" class="form-control" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display: none">
-                            <button id="btnUploadFileDocx" class="btn btn-primary btn-uploadFile">Upload</button>
-                        </div>
-
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">File Pdf</label>
-                        <div style="display:flex">
-                            <input readonly id="InputAsmFilePdf" type="text" name="FilePdf" class="form-control">
-                            <input id="InputAsmFilePdfUpdate" type="file" name="FilePdfUpdate" class="form-control" accept="application/pdf" style="display: none">
-                            <button id="btnUploadFilePdf" class="btn btn-primary btn-uploadFile">Upload</button>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">File Powerpoint</label>
-                        <div style="display:flex">
-                            <input readonly id="InputAsmFilePptx" type="text" name="FilePptx" class="form-control">
-                            <input id="InputAsmFilePptxUpdate" type="file" name="FilePptxUpdate" class="form-control" accept="application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation"  style="display: none">
-                            <button id="btnUploadFilePptx" class="btn btn-primary btn-uploadFile">Upload</button>
-                        </div>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label">Images</label>
-                        <div id="ImageContainer" style="display: flex; flex-wrap: wrap;"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" id="" class="btn btn-primary">Create</button>
-                    </div>
-                </form>
+               @Html.Action("UpdateAsm")
             </div>
         </div>
     </div>

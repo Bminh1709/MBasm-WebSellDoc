@@ -9,11 +9,13 @@
     /*border-radius: 50px;*/
     padding: 7px 15px;
     border: 1px solid #ffc451;
+    border-radius: 30px;
 }
-/*    .btn-hover:hover {
-        border: 1px solid #ffc451;
+    .btn-hover:hover {
+        background: #ffc451;
+        color: black;
     }
-*/
+
 /*
     .btn-hover::before {
         margin-left: auto;

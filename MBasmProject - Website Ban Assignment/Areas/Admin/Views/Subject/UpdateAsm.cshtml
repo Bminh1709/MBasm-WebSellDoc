@@ -1,0 +1,110 @@
+﻿@model IEnumerable<MBasmProject.Models.Category>
+@{
+    Layout = null;
+}
+
+<form id="AssignmentFormUpdate" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label">Id</label>
+        <input readonly id="InputAsmId" type="text" name="Id" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input id="InputAsmTitle" name="Title" type="text" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select name="Category_id" id="InputAsmCat" class="form-control">
+            @foreach (var item in Model)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <input id="InputAsmDes" type="text" name="Description" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Grade</label>
+        <select id="InputAsmGrade" name="Grade" class="form-select">
+            <option value="">Undefined</option>
+            <option value="P">P</option>
+            <option value="M">M</option>
+            <option value="D">D</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Price</label>
+        <input id="InputAsmPrice" type="number" name="Price" class="form-control">
+    </div>
+    <div class="form-check form-switch mb-3">
+        <input id="InputAsmHot" class="form-check-input" type="checkbox" value="True" name="Hot">
+        <label class="form-check-label">Check if the assignment is hot!</label>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">File Word</label>
+        <div style="display:flex">
+            <input id="InputAsmFileDocx" type="text" name="FileDocx" class="form-control" readonly>
+            <input id="InputAsmFileDocxUpdate" type="file" name="FileDocxUpdate" class="form-control" accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display: none">
+            <button id="btnUploadFileDocx" class="btn btn-primary btn-uploadFile">Upload</button>
+        </div>
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label">File Pdf</label>
+        <div style="display:flex">
+            <input readonly id="InputAsmFilePdf" type="text" name="FilePdf" class="form-control">
+            <input id="InputAsmFilePdfUpdate" type="file" name="FilePdfUpdate" class="form-control" accept="application/pdf" style="display: none">
+            <button id="btnUploadFilePdf" class="btn btn-primary btn-uploadFile">Upload</button>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">File Powerpoint</label>
+        <div style="display:flex">
+            <input readonly id="InputAsmFilePptx" type="text" name="FilePptx" class="form-control">
+            <input id="InputAsmFilePptxUpdate" type="file" name="FilePptxUpdate" class="form-control" accept="application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation" style="display: none">
+            <button id="btnUploadFilePptx" class="btn btn-primary btn-uploadFile">Upload</button>
+        </div>
+    </div>
+    <div class="mb-4">
+        <label class="form-label">Images</label>
+        <div id="ImageContainer" style="display: flex; flex-wrap: wrap;"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="" class="btn btn-primary">Update</button>
+    </div>
+</form>
+
+<script src="~/Areas/Admin/assets/libs/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("form#AssignmentFormUpdate").submit(function (e) {
+            e.preventDefault();
+            var formData2 = new FormData(this);
+
+            // Display the key/value pairs
+            for (var pair of formData2.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
+
+            $.ajax({
+                url: "/Admin/Subject/UpdateAsm",
+                type: "POST",
+                data: formData2,
+                processData: false,
+                contentType: false,
+                success: function (rs) {
+                    if (rs.success) {
+                        alert("Success");
+                        window.location.reload();
+                    } else {
+                        alert("Fail");
+                        window.location.reload();
+                    }
+                }
+            });
+        });
+    });
+</script>
