@@ -17,6 +17,10 @@ namespace MBasmProject.Controllers
                     ViewBag.error = "404";
                     ViewBag.error_msg = "The page you are looking for not avaible!";
                     break;
+                case 403:
+                    ViewBag.error = "403";
+                    ViewBag.error_msg = "You don't have permission to access the requested resource on the server!";
+                    break;
                 case 500:
                     ViewBag.error = "500";
                     ViewBag.error_msg = "Internal Server Error!";

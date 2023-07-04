@@ -252,7 +252,7 @@ namespace MBasmProject.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateAsm(Assignment updateAsm, HttpPostedFileBase FileDocxUpdate, HttpPostedFileBase FilePdfUpdate, HttpPostedFileBase FilePptxUpdate)
+        public ActionResult UpdateAsm(Assignment updateAsm, HttpPostedFileBase[] AddedImgs, HttpPostedFileBase FileDocxUpdate, HttpPostedFileBase FilePdfUpdate, HttpPostedFileBase FilePptxUpdate)
         {
             try
             {
@@ -268,6 +268,30 @@ namespace MBasmProject.Areas.Admin.Controllers
                         modelFound.Price = updateAsm.Price;
                         modelFound.UpdatedDate = DateTime.Now;
                         modelFound.Hot = updateAsm.Hot ?? false;
+
+                        List<string> uploadedFileNames = new List<string>();
+                        foreach (HttpPostedFileBase file in AddedImgs)
+                        {
+                            // Checking file is available to save
+                            if (file != null && file.ContentLength > 0)
+                            {
+                                string fileName = Path.GetFileName(file.FileName);
+                                string filePath = Path.Combine(Server.MapPath("~/assets/img/Asm"), fileName);
+                                file.SaveAs(filePath);
+                                uploadedFileNames.Add(fileName);
+                            }
+                        }
+                        // Save the file names in the model property
+                        string newListImgs = string.Join(",", uploadedFileNames);
+
+                        if (string.IsNullOrEmpty(modelFound.Images))
+                        {
+                            modelFound.Images = newListImgs;
+                        }
+                        else
+                        {
+                            modelFound.Images += "," + newListImgs;
+                        }
 
                         // Handle file uploads
                         if (FileDocxUpdate != null)
@@ -332,7 +356,56 @@ namespace MBasmProject.Areas.Admin.Controllers
             }   
         }
 
+        [HttpPost]
+        public ActionResult DeleteImg(int id, string imgLink)
+        {
+            try
+            {
+                using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
+                {
+                    var asmFound = db.Assignments.Find(id);
+                    string img = imgLink.Substring(imgLink.LastIndexOf('/') + 1);
+                    if (asmFound != null)
+                    {
+                        string[] images = asmFound.Images.Split(',');
+                        List<string> imageList = new List<string>(images);
 
+                        foreach (string image in images)
+                        {
+                            if (image == img)
+                            {
+                                imageList.Remove(image);
+                                break;
+                            }
+                        }
+                        string imgPath = Request.MapPath("~/assets/img/Asm/" + img);
+                        if (System.IO.File.Exists(imgPath))
+                        {
+                            System.IO.File.Delete(imgPath);
+                        }
+                        // Convert the list back to an array
+                        images = imageList.ToArray();
+
+                        // Join the array elements with commas to get the updated Images string
+                        string updatedImages = string.Join(",", images);
+
+                        // Update the asmFound.Images property with the updatedImages string
+                        asmFound.Images = updatedImages;
+
+                        // Save the changes to the database
+                        db.SaveChanges();
+
+                        return Json(new { success = true });
+                    }
+                    else
+                        return Json(new { success = false });
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
+            }
+        }
 
         [HttpPost]
         public ActionResult DeleteAsm(int id)

@@ -1,9 +1,11 @@
 ﻿using MBasmProject.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace MBasmProject.Controllers
 {
@@ -11,21 +13,43 @@ namespace MBasmProject.Controllers
     public class SubjectController : Controller
     {
         // GET: Subject
-        public ActionResult Index()
+        public ActionResult Index(string filter, int? subject, string grade)
         {
             try
             {
                 using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
                 {
-                    List<Assignment> lstAsm = db.Assignments.ToList();
+                    var query = db.Assignments.AsQueryable();
+
+                    if (filter != null)
+                    {
+                        ViewBag.filter = filter;
+
+                        if (!string.IsNullOrEmpty(grade))
+                        {
+                            query = query.Where(a => a.Grade == grade);
+                            ViewBag.grade = grade;
+                        }
+
+                        if (subject.HasValue)
+                        {
+                            query = query.Where(a => a.Category_id == subject);
+                            ViewBag.subject = subject;
+                        }
+
+                        query = query.Where(a => a.Title.Contains(filter));
+                    }
+
+                    var lstAsm = query.ToList();
                     return View(lstAsm);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                return RedirectToAction("Index", "Error", new { num = "403", errorMsg = e.Message });
             }
         }
+
         public ActionResult Detail(int id)
         {
             try

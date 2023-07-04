@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<MBasmProject.Models.Assignment>
+@using MBasmProject.Models;
 @{
     ViewBag.Title = "Subject";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities();
+    ViewData["lstCat"] = db.Categories.ToList();
 }
 @section htmlstyle {
     <link href="~/assets/css/searchingBar.css" rel="stylesheet" />
@@ -17,24 +20,23 @@
 
 
         <div class="s013">
-            <form>
+            <form method="get">
                 <div class="inner-form">
                     <div class="left">
                         <div class="input-wrap first">
                             <div class="input-field first">
-                                @*<label>WHAT</label>*@
-                                <input type="text" placeholder="ex: 1631, AEG1150..." style="padding: unset;" />
+                                <input name="filter" value="@ViewBag.filter" type="text" placeholder="ex: 1631, AEG1150..." style="padding: unset;" />
                             </div>
                         </div>
                         <div class="input-wrap second">
                             <div class="input-field second">
-                                @*<label>Grade</label>*@
                                 <div class="input-select">
-                                    <select data-trigger="" class="decorated" name="choices-single-defaul">
-                                        <option placeholder="">All Subjects</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
+                                    <select data-trigger="" class="decorated" name="subject">
+                                        <option value="">All Subjects</option>
+                                        @foreach (var item in ViewData["lstCat"] as IEnumerable<MBasmProject.Models.Category>)
+                                        {
+                                            <option value="@item.Id" @(ViewBag.subject == @item.Id ? "selected" : "")>@item.Name</option>
+                                        }
                                     </select>
                                 </div>
                             </div>
@@ -42,17 +44,17 @@
                         <div class="input-wrap second">
                             <div>
                                 <div class="input-select">
-                                    <select data-trigger="" class="decorated" name="choices-single-defaul">
-                                        <option placeholder="">All Grades</option>
-                                        <option>P - Pass</option>
-                                        <option>M - Merit</option>
-                                        <option>D - Distinction</option>
+                                    <select data-trigger="" class="decorated" name="grade">
+                                        <option value="">All Grades</option>
+                                        <option value="P" @(ViewBag.grade == "P" ? "selected" : "")>P - Pass</option>
+                                        <option value="M" @(ViewBag.grade == "M" ? "selected" : "")>M - Merit</option>
+                                        <option value="D" @(ViewBag.grade == "D" ? "selected" : "")>D - Distinction</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button class="btn-search" type="button">SEARCH</button>
+                    <button class="btn-search" type="submit">SEARCH</button>
                 </div>
             </form>
         </div>
@@ -62,9 +64,9 @@
 
 
         <!-- ======= Team Section ======= -->
-        <section id="team" class="team" style="background:none; margin-top:35px;">
-            <div class="container" @*data-aos="fade-up"*@>
-                <div class="row">
+        <section id="team" class="team" style="background:none;">
+            <div class="container" style=" max-width: 1230px;">
+                <div class="row" style=" display: flex; justify-content: space-between;">
 
 
                     @foreach (var item in Model)
@@ -75,11 +77,11 @@
                                     @{ string[] images = item.Images.Split(',');
                                         <img src="~/assets/img/Asm/@images[0]" class="img-show" alt="">
                                     }
-                                        <div class="social">
-                                            <a href="~/Subject/Detail?id=@item.Id"><i class="fa-solid fa-circle-info"></i></a>
-                                            <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
-                                            <a href=""><i class="fa-solid fa-bookmark"></i></a>
-                                        </div>
+                                    <div class="social">
+                                        <a href="~/Subject/Detail?id=@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                                        <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+                                        <a href=""><i class="fa-solid fa-bookmark"></i></a>
+                                    </div>
                                 </div>
                                 <div class="member-info">
                                     <h4>@item.Title</h4>
@@ -97,3 +99,7 @@
 
     </section>
 </main><!-- End #main -->
+
+@*@section scripts {
+    <script src="~/ScriptsAjax/Filter.js"></script>
+}*@

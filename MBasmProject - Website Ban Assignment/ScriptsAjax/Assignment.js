@@ -104,12 +104,34 @@
                     if (rs.data.Images != null && rs.data.Images.length !== 0) {
                         var imagesData = rs.data.Images;
                         var images = imagesData.split(',');
+
                         for (var i = 0; i < images.length; i++) {
                             var imgSrc = '/assets/img/Asm/' + images[i];
-                            var imgElement = $('<img>').attr('style', 'height: 150px; width: 100px; object-fit: cover; margin: 10px auto; border: var(--bs-border-width) solid #DFE5EF;').attr('src', imgSrc);
-                            $('#ImageContainer').append(imgElement);
+
+                            var divContainer = $('<div>').css('position', 'relative');
+                            var iconDelete = $('<i>').addClass('fa-solid fa-trash-can').css('font-size', '25px');
+                            var imgLink = $('<button>').css({
+                                'position': 'absolute',
+                                'right': '-10px',
+                                'color': '#b73636',
+                                'background': 'none',
+                                'border': 'none'
+                            }).attr('type', 'button').attr('id', 'btnDeleteImg')/*.attr('data-imgid', i)*/;
+                            var imgElement = $('<img>').css({
+                                'height': '170px',
+                                'width': '130px',
+                                'object-fit': 'cover',
+                                'margin': '10px auto',
+                                'border': 'var(--bs-border-width) solid #DFE5EF'
+                            }).attr('src', imgSrc);
+
+                            imgLink.append(iconDelete);
+                            divContainer.append(imgLink);
+                            divContainer.append(imgElement);
+                            $('#ImageContainer').append(divContainer);
                         }
                     }
+
                     else {
                         var imgElement = $('<img>').attr('style', 'height: 150px; width: 100px; object-fit: cover; margin: 10px auto; border: var(--bs-border-width) solid #DFE5EF;').attr('src', "/assets/img/Asm/No-Image.svg.png");
                         $('#ImageContainer').append(imgElement);
