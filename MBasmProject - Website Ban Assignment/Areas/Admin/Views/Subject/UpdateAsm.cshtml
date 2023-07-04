@@ -69,7 +69,12 @@
     </div>
     <div class="mb-4">
         <label class="form-label">Images</label>
-        <div id="ImageContainer" style="display: flex; flex-wrap: wrap;"></div>
+        <div id="ImageContainer" style="display: flex; flex-wrap: wrap; justify-content: space-evenly"></div>
+        <div style="width: 100%; text-align: center;">
+            <button id="btn-addImg" type="button" style="margin-top:5px;" class="btn btn-primary">Add new image</button>
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-evenly" text-align: center" id="preview"></div>
+            <input name="AddedImgs" style="display:none" id="input-addImg" type="file" multiple accept="image/*" class="form-control" />
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -80,13 +85,70 @@
 <script src="~/Areas/Admin/assets/libs/jquery/dist/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
+
+        $('body').on('click', '.btnEditAsm', function () {
+            $('#preview').empty();
+            $('#btn-addImg').show();
+            $('#input-addImg').hide();
+        });
+
+        $('#btn-addImg').on('click', function () {
+            $(this).hide();
+            $('#input-addImg').show();
+        });
+
+        $('#input-addImg').on('change', function (event) {
+            getImagePreview(event);
+        });
+        function getImagePreview(event) {
+            var files = event.target.files; // Get the selected files
+            var imagediv = $('#preview');
+            imagediv.empty();
+
+            for (var i = 0; i < files.length; i++) {
+                var image = URL.createObjectURL(files[i]); // Get the image URL
+                var newimg = $('<img>').attr('src', image).css({
+                    'height': '170px',
+                    'width': '130px',
+                    'object-fit': 'cover',
+                    'margin': '10px auto',
+                    'border': 'var(--bs-border-width) solid #DFE5EF',
+                });
+                imagediv.append(newimg);
+            }
+        }
+
+
+        $(document).on('click', '#btnDeleteImg', function () {
+
+            // var imgId = $(this).data('imgid');
+            var idAsm = $('#InputAsmId').val();
+            var imgSrc = $(this).siblings('img').attr('src');
+            var imgContainer = $(this).closest('div');
+
+            $.ajax({
+                url: "/Admin/Subject/DeleteImg",
+                method: "POST",
+                data: { id: idAsm, imgLink: imgSrc },
+                success: function (rs) {
+                    if (rs.success) {
+                        alert("Delete the image successfully!");
+                        imgContainer.remove();
+                    }
+                    else {
+                        alert("Delete the image fail!");
+                    }
+                }
+            });
+        });
+
+
         $("form#AssignmentFormUpdate").submit(function (e) {
             e.preventDefault();
             var formData2 = new FormData(this);
 
-            // Display the key/value pairs
             for (var pair of formData2.entries()) {
-                console.log(pair[0] + ': ' + pair[1]);
+                console.log(pair[0] + ', ' + pair[1]);
             }
 
             $.ajax({
