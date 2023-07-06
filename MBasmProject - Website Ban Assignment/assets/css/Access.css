@@ -5,7 +5,26 @@
     margin: 0px;
     box-sizing: border-box;
 }
-
+.showPassIcon {
+    position:absolute;
+    right:10px;
+    top: 13px;
+    color:gray;
+}
+.showPassIcon2 {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+    color: gray;
+}
+#messageSignUp {
+    position: absolute;
+    bottom: 30px;
+}
+#messageSignIn {
+    position: absolute;
+    bottom: 30px;
+}
 :root {
     --linear-grad: linear-gradient(to right, #141E30, #243B55);
     --grad-clr1: #141E30;
@@ -126,9 +145,9 @@ a {
 
 button {
     border-radius: 20px;
-    border: 1px solid var(--grad-clr1);
+    border: none;
     background: var(--grad-clr2);
-    color: #fff;
+    color: white;
     font-size: 12px;
     font-weight: bold;
     padding: 12px 45px;
@@ -142,8 +161,7 @@ button {
 }
 
     .form-container button:hover {
-        background: #fff;
-        color: var(--grad-clr1);
+        cursor:pointer;
     }
 
 .overlay-container {

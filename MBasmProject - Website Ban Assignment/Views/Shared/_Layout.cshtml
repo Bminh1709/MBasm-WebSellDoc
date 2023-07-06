@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using MBasmProject.Models
+
+@{
+    var user = Session["User"] as User;
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -6,13 +12,14 @@
 
     <title>@ViewBag.Title</title>
     @*<meta content="" name="description">
-    <meta content="" name="keywords">*@
+        <meta content="" name="keywords">*@
 
     <!-- Favicons -->
     <link href="~/assets/img/logo_transparent2.png" rel="icon">
     <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
@@ -27,7 +34,7 @@
     <!-- Template Main CSS File -->
     <link href="~/assets/css/style.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     @RenderSection("htmlstyle", required: false)
 
@@ -45,9 +52,9 @@
                     <li><a class="nav-link scrollto" href="#about">About</a></li>
                     @*<li><a class="nav-link scrollto" href="#team">Team</a></li>*@
                     <li class="dropdown">
-                        <a href="#"><span>Subjects</span> @*<i class="bi bi-chevron-down"></i>*@</a>
+                        <a href="~/Subject"><span>Subjects</span> @*<i class="bi bi-chevron-down"></i>*@</a>
                         <ul>
-                            <li><a href="#">English Subject</a></li>
+                            <li><a href="">English Subject</a></li>
                             <li class="dropdown">
                                 <a href="#"><span>Major subject</span> <i class="bi bi-chevron-right"></i></a>
                                 <ul>
@@ -73,15 +80,23 @@
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
             <!-- .navbar -->
-            <a href="/Access" class="get-started-btn scrollto">Let's go</a>
-            @*<div class="profile-button">
-                    <a href="/User/Home" class="docs">
-                        Welcome back "Minh"
-                    </a>
-                    <a href="/Logout" class="logout-button">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    </a>
-                </div>*@
+            @{
+                if (user != null)
+                {
+                    <div class="profile-button">
+                        <a href="/User/Home" class="docs">
+                            Welcome back "@user.Fullname"
+                        </a>
+                        <a href="/Access/Logout" class="logout-button">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <a href="/Access" class="get-started-btn scrollto">Let's go</a>
+                }
+            }
 
         </div>
     </header><!-- End Header -->

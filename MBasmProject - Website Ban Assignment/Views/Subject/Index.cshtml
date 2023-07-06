@@ -73,20 +73,17 @@
                     {
                         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" style="width: 295px;">
                             <div class="member" @*data-aos="fade-up" data-aos-delay="100"*@>
-                                <div class="member-img">
-                                    @{ string[] images = item.Images.Split(',');
-                                        <img src="~/assets/img/Asm/@images[0]" class="img-show" alt="">
-                                    }
-                                    <div class="social">
-                                        <a href="~/Subject/Detail?id=@item.Id"><i class="fa-solid fa-circle-info"></i></a>
-                                        <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
-                                        <a href=""><i class="fa-solid fa-bookmark"></i></a>
+                                <a href="~/Subject/Detail?id=@item.Id">
+                                    <div class="member-img">
+                                        @{ string[] images = item.Images.Split(',');
+                                            <img src="~/assets/img/Asm/@images[0]" class="img-show" alt="">
+                                        }
                                     </div>
-                                </div>
-                                <div class="member-info">
-                                    <h4>@item.Title</h4>
-                                    <span>@item.Price</span>
-                                </div>
+                                    <div class="member-info">
+                                        <h4>@item.Title</h4>
+                                        <span>@item.Price</span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     }
