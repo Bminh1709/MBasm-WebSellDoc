@@ -160,15 +160,16 @@ h6 {
   background: rgba(0, 0, 0, 0.8);
 }
 
-#header .logo {
-  font-size: 32px;
-  margin: 0;
-  padding: 0;
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
+    #header .logo {
+        font-size: 32px;
+        margin: 0;
+        padding: 0;
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-family: 'Belanosima', sans-serif;
+    }
 
 #header .logo a {
   color: #fff;
@@ -459,14 +460,14 @@ width: 100%;
   text-align: center;
 }
 
-#hero h1 {
-  margin: 0;
-  font-size: 56px;
-  font-weight: 700;
-  line-height: 64px;
-  color: #fff;
-  font-family: "Poppins", sans-serif;
-}
+    #hero h1 {
+        margin: 0;
+        font-size: 65px;
+        font-weight: 600;
+        line-height: 64px;
+        color: #fff;
+        font-family: 'Belanosima', sans-serif;
+    }
 
 #hero h1 span {
   color: #ffc451;
@@ -548,7 +549,8 @@ section {
 }
 
 .section-title {
-  padding-bottom: 40px;
+    /*padding-bottom: 40px;*/
+    margin-bottom: 25px;
 }
 
 .section-title h2 {
@@ -686,28 +688,33 @@ section {
 # Services
 --------------------------------------------------------------*/
 .services .icon-box {
-  text-align: center;
-  border: 1px solid #ebebeb;
-  padding: 80px 20px;
-  transition: all ease-in-out 0.3s;
-  background: #fff;
+    text-align: center;
+    border: 1px solid #ebebeb;
+    padding: 80px 20px;
+    transition: all ease-in-out 0.3s;
+    background: #fff;
+    color: #929292;
 }
-.services .icon-box:hover .icon
-{
-    background: #ffc451;
-}
-.services .icon-box .icon {
-  margin: 0 auto;
-  width: 64px;
-  height: 64px;
-  /*background: #ffc451;*/
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  transition: 0.3s;
-}
+    .services .icon-box:hover {
+        background: #ffc451;
+        color: #151515;
+    }
+        .services .icon-box:hover .icon {
+            background-color: white;
+            border-radius: 50%;
+        }
+    .services .icon-box .icon {
+        margin: 0 auto;
+        width: 64px;
+        height: 64px;
+        background: #dddddd;
+        border-radius: 76% 24% 75% 25% / 45% 52% 48% 55%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        transition: 0.3s;
+    }
 
 .services .icon-box .icon i {
   color: #151515;

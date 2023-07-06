@@ -13,14 +13,12 @@
     <title>Access</title>
     <link href="~/assets/img/logo_transparent2.png" rel="icon">
     <!-- font awesome icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- css stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 </head>
-<body style="background-image: url('/assets/img/elements/Dark Gray Simple Happy Pi Day Flyer (1).png'); background-size: cover; ">
+<body style="background-image: url('/assets/img/elements/people-g8eb63928e_1280.jpg'); background-size: cover; ">
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="#">
+            <form id="signupFormUser" name="frmUser">
                 <h1>Create Account</h1>
                 <div class="social-container">
                     <a href="#" class="social" style="background: #2946a2;"><i class="fab fa-facebook-f"></i></a>
@@ -29,26 +27,23 @@
                 </div>
                 <span>or use your email for registration</span>
                 <div class="infield">
-                    <input type="text" placeholder="Name" />
+                    <input type="text" placeholder="Name" name="Fullname" />
                     <label></label>
                 </div>
                 <div class="infield">
-                    <input type="email" placeholder="Email" name="email" />
+                    <input type="email" placeholder="Email" name="Gmail" />
                     <label></label>
                 </div>
                 <div class="infield">
-                    <input type="password" placeholder="Password" />
+                    <input type="password" placeholder="Password" name="Password" id="inputSignUp" /><i class="fa-solid fa-eye showPassIcon"></i>
                     <label></label>
                 </div>
-                <div class="infield">
-                    <input type="number" placeholder="Phone Number" />
-                    <label></label>
-                </div>
-                <button>Sign Up</button>
+                <button type="submit">Sign Up</button>
+                <div id="messageSignUp"></div>
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="#">
+            <form action="#" id="signinFormUser" name="frmUserSignin">
                 <h1>Sign in</h1>
                 <div class="social-container">
                     <a href="#" class="social" style="background: #2946a2;"><i class="fab fa-facebook-f"></i></a>
@@ -57,27 +52,28 @@
                 </div>
                 <span>or use your account</span>
                 <div class="infield">
-                    <input type="email" placeholder="Email" name="email" />
+                    <input type="email" placeholder="Email" name="Gmail" />
                     <label></label>
                 </div>
                 <div class="infield">
-                    <input type="password" placeholder="Password" />
+                    <input id="inputSignIn" type="password" placeholder="Password"  name="Password"/><i class="fa-solid fa-eye showPassIcon2"></i>
                     <label></label>
                 </div>
                 <a href="#" class="forgot">Forgot your password?</a>
                 <button>Sign In</button>
+                <div id="messageSignIn"></div>
             </form>
         </div>
         <div class="overlay-container" id="overlayCon">
             <div class="overlay">
                 <div class="overlay-panel overlay-left">
-                    <h1>Welcome Back!</h1>
-                    <p>Achieve More, Stress Less<br>Your Assignment Partner!</p>
+                    <h1>Hello, GWer!</h1>
+                    <p>Enter your personal details and start learning with us.</p>
                     <button>Sign In</button>
                 </div>
                 <div class="overlay-panel overlay-right">
-                    <h1>Hello, GWer!</h1>
-                    <p>Enter your personal details and start learning with us.</p>
+                    <h1>Welcome Back!</h1>
+                    <p>Achieve More, Stress Less<br>Your Assignment Partner!</p>
                     <button>Sign Up</button>
                 </div>
             </div>
@@ -86,21 +82,51 @@
     </div>
 
     <!-- js code -->
+    @Scripts.Render("~/bundles/jquery")
     <script>
         const container = document.getElementById('container');
         const overlayCon = document.getElementById('overlayCon');
         const overlayBtn = document.getElementById('overlayBtn');
 
-        overlayBtn.addEventListener('click',()=> {
+        overlayBtn.addEventListener('click', () => {
             container.classList.toggle('right-panel-active');
 
             overlayBtn.classList.remove('btnScaled');
-            window.requestAnimationFrame( ()=> {
+            window.requestAnimationFrame(() => {
                 overlayBtn.classList.add('btnScaled');
             })
         });
-    </script>
 
+        var showPassIcon = $('.showPassIcon');
+        var passwordInput = $('#inputSignUp');
+
+        showPassIcon.on('click', function () {
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text');
+                showPassIcon.removeClass('fa-eye');
+                showPassIcon.addClass('fa-eye-slash');
+            } else {
+                passwordInput.attr('type', 'password');
+                showPassIcon.removeClass('fa-eye-slash');
+                showPassIcon.addClass('fa-eye');
+            }
+        });
+
+        var showPassIcon2 = $('.showPassIcon2');
+        var passwordInput2 = $('#inputSignIn');
+
+        showPassIcon2.on('click', function () {
+            if (passwordInput2.attr('type') === 'password') {
+                passwordInput2.attr('type', 'text');
+                showPassIcon2.removeClass('fa-eye');
+                showPassIcon2.addClass('fa-eye-slash');
+            } else {
+                passwordInput2.attr('type', 'password');
+                showPassIcon2.removeClass('fa-eye-slash');
+                showPassIcon2.addClass('fa-eye');
+            }
+        });
+    </script>
+    <script src="~/ScriptsAjax/Access.js"></script>
 </body>
 </html>
-

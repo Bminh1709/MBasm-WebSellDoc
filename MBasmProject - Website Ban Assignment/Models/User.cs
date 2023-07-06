@@ -22,11 +22,9 @@ namespace MBasmProject.Models
         }
     
         public int Id { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+        public string Fullname { get; set; }
         public string Gmail { get; set; }
         public string Password { get; set; }
-        public string Phone { get; set; }
         public string Avatar { get; set; }
         public Nullable<System.DateTime> JoinDate { get; set; }
     

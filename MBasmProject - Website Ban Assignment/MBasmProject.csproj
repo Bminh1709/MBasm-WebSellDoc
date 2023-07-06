@@ -696,6 +696,7 @@
       <DependentUpon>MBasmModel.edmx</DependentUpon>
       <LastGenOutput>MBasmModel.cs</LastGenOutput>
     </Content>
+    <Content Include="ScriptsAjax\Access.js" />
     <Content Include="ScriptsAjax\Assignment.js" />
     <Content Include="ScriptsAjax\Category.js" />
     <Content Include="ScriptsAjax\Filter.js" />

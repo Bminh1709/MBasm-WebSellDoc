@@ -10,26 +10,9 @@
     padding: 7px 15px;
     border: 1px solid #ffc451;
     border-radius: 30px;
+    margin-bottom:20px;
 }
     .btn-hover:hover {
         background: #ffc451;
         color: black;
     }
-
-/*
-    .btn-hover::before {
-        margin-left: auto;
-    }
-
-    .btn-hover::after, .btn-hover::before {
-        content: '';
-        width: 0%;
-        height: 2px;
-        background: #ffc451;
-        display: block;
-        transition: 0.5s;
-    }
-
-    .btn-hover:hover::after, .btn-hover:hover::before {
-        width: 100%;
-    }*/

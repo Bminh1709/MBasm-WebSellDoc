@@ -72,11 +72,9 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Firstname" Type="nvarchar" MaxLength="50" />
-    <Property Name="Lastname" Type="nvarchar" MaxLength="50" />
+    <Property Name="Fullname" Type="nvarchar" MaxLength="200" />
     <Property Name="Gmail" Type="nvarchar" MaxLength="200" />
     <Property Name="Password" Type="nvarchar" MaxLength="100" />
-    <Property Name="Phone" Type="varchar" MaxLength="12" />
     <Property Name="Avatar" Type="varchar(max)" />
     <Property Name="JoinDate" Type="datetime" />
   </EntityType>

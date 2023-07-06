@@ -9,7 +9,6 @@
 
 namespace MBasmProject.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -35,8 +34,7 @@ namespace MBasmProject.Models
         public string FileDocx { get; set; }
         public string FilePdf { get; set; }
         public string FilePptx { get; set; }
-
-        [JsonIgnore]
+    
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order_Detail> Order_Detail { get; set; }
