@@ -19,6 +19,6 @@ namespace MBasmProject.Models
         public string Contents { get; set; }
         public Nullable<bool> IsRead { get; set; }
     
-        public virtual User User { get; set; }
+        public virtual Userpp Userpp { get; set; }
     }
 }

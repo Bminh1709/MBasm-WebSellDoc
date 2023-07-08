@@ -1,7 +1,7 @@
 ﻿@using MBasmProject.Models
 
 @{
-    var user = Session["User"] as User;
+    var user = Session["User"] as Userpp;
 }
 
 <!DOCTYPE html>
@@ -172,9 +172,10 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 
     <!-- Block other to view code - open to view source -->
     <script src="~/assets/js/main.js"></script>
+
+    @RenderSection("scripts", required: false)
 </body>
 </html>

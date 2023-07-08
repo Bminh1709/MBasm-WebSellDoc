@@ -30,6 +30,6 @@ namespace MBasmProject.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order_Detail> Order_Detail { get; set; }
-        public virtual User User { get; set; }
+        public virtual Userpp Userpp { get; set; }
     }
 }

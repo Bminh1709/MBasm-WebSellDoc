@@ -5,7 +5,7 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="MBasm_AssignmentsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Admin">
+        <EntityType Name="Adminpp">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -72,7 +72,15 @@
           <Property Name="Assignment_id" Type="int" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="0" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="SavedAsm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Assignment_id" Type="int" />
+          <Property Name="User_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Userpp">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -96,10 +104,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Feedback_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Userpp" Type="Self.Userpp" Multiplicity="0..1" />
           <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Userpp">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Feedback">
@@ -132,10 +140,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Userpp" Type="Self.Userpp" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Userpp">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Order">
@@ -143,20 +151,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SavedAsm_Assignment">
+          <End Role="Assignment" Type="Self.Assignment" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SavedAsm" Type="Self.SavedAsm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assignment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SavedAsm">
+              <PropertyRef Name="Assignment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SavedAsm_User">
+          <End Role="Userpp" Type="Self.Userpp" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SavedAsm" Type="Self.SavedAsm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Userpp">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SavedAsm">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="MBasm_AssignmentsModelStoreContainer">
-          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Adminpp" EntityType="Self.Adminpp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Assignment" EntityType="Self.Assignment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Detail" EntityType="Self.Order_Detail" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SavedAsm" EntityType="Self.SavedAsm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Userpp" EntityType="Self.Userpp" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Assignment_Category" Association="Self.FK_Assignment_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="Assignment" EntitySet="Assignment" />
           </AssociationSet>
           <AssociationSet Name="FK_Feedback_User" Association="Self.FK_Feedback_User">
-            <End Role="User" EntitySet="User" />
+            <End Role="Userpp" EntitySet="Userpp" />
             <End Role="Feedback" EntitySet="Feedback" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Detail_Assignment" Association="Self.FK_Order_Detail_Assignment">
@@ -168,24 +205,22 @@
             <End Role="Order_Detail" EntitySet="Order_Detail" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
-            <End Role="User" EntitySet="User" />
+            <End Role="Userpp" EntitySet="Userpp" />
             <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SavedAsm_Assignment" Association="Self.FK_SavedAsm_Assignment">
+            <End Role="Assignment" EntitySet="Assignment" />
+            <End Role="SavedAsm" EntitySet="SavedAsm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SavedAsm_User" Association="Self.FK_SavedAsm_User">
+            <End Role="Userpp" EntitySet="Userpp" />
+            <End Role="SavedAsm" EntitySet="SavedAsm" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MBasm_AssignmentsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Admin">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Gmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Assignment">
           <Key>
             <PropertyRef Name="Id" />
@@ -206,6 +241,7 @@
           <Property Name="FilePptx" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Assignment_Category" FromRole="Assignment" ToRole="Category" />
           <NavigationProperty Name="Order_Detail" Relationship="Self.FK_Order_Detail_Assignment" FromRole="Assignment" ToRole="Order_Detail" />
+          <NavigationProperty Name="SavedAsms" Relationship="MBasm_AssignmentsModel.FK_SavedAsm_Assignment" FromRole="Assignment" ToRole="SavedAsm" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -224,7 +260,7 @@
           <Property Name="User_id" Type="Int32" />
           <Property Name="Contents" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsRead" Type="Boolean" />
-          <NavigationProperty Name="User" Relationship="MBasm_AssignmentsModel.FK_Feedback_User" FromRole="Feedback" ToRole="User" />
+          <NavigationProperty Name="Userpp" Relationship="MBasm_AssignmentsModel.FK_Feedback_User" FromRole="Feedback" ToRole="Userpp" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -238,7 +274,7 @@
           <Property Name="Quanitty" Type="Int32" />
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="Order_Detail" Relationship="Self.FK_Order_Detail_Order" FromRole="Order" ToRole="Order_Detail" />
-          <NavigationProperty Name="User" Relationship="MBasm_AssignmentsModel.FK_Order_User" FromRole="Order" ToRole="User" />
+          <NavigationProperty Name="Userpp" Relationship="MBasm_AssignmentsModel.FK_Order_User" FromRole="Order" ToRole="Userpp" />
         </EntityType>
         <EntityType Name="Order_Detail">
           <Key>
@@ -288,7 +324,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="MBasm_AssignmentsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Admins" EntityType="Self.Admin" />
           <EntitySet Name="Assignments" EntityType="Self.Assignment" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
@@ -306,17 +341,59 @@
             <End Role="Order" EntitySet="Orders" />
             <End Role="Order_Detail" EntitySet="Order_Detail" />
           </AssociationSet>
-          <EntitySet Name="Users" EntityType="MBasm_AssignmentsModel.User" />
+          <EntitySet Name="SavedAsms" EntityType="MBasm_AssignmentsModel.SavedAsm" />
+          <AssociationSet Name="FK_SavedAsm_Assignment" Association="MBasm_AssignmentsModel.FK_SavedAsm_Assignment">
+            <End Role="Assignment" EntitySet="Assignments" />
+            <End Role="SavedAsm" EntitySet="SavedAsms" />
+          </AssociationSet>
+          <EntitySet Name="Adminpps" EntityType="MBasm_AssignmentsModel.Adminpp" />
+          <EntitySet Name="Userpps" EntityType="MBasm_AssignmentsModel.Userpp" />
           <AssociationSet Name="FK_Feedback_User" Association="MBasm_AssignmentsModel.FK_Feedback_User">
-            <End Role="User" EntitySet="Users" />
+            <End Role="Userpp" EntitySet="Userpps" />
             <End Role="Feedback" EntitySet="Feedbacks" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_User" Association="MBasm_AssignmentsModel.FK_Order_User">
-            <End Role="User" EntitySet="Users" />
+            <End Role="Userpp" EntitySet="Userpps" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="User">
+          <AssociationSet Name="FK_SavedAsm_User" Association="MBasm_AssignmentsModel.FK_SavedAsm_User">
+            <End Role="Userpp" EntitySet="Userpps" />
+            <End Role="SavedAsm" EntitySet="SavedAsms" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="SavedAsm">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Assignment_id" Type="Int32" />
+          <Property Name="User_id" Type="Int32" />
+          <NavigationProperty Name="Assignment" Relationship="MBasm_AssignmentsModel.FK_SavedAsm_Assignment" FromRole="SavedAsm" ToRole="Assignment" />
+          <NavigationProperty Name="Userpp" Relationship="MBasm_AssignmentsModel.FK_SavedAsm_User" FromRole="SavedAsm" ToRole="Userpp" />
+        </EntityType>
+        <Association Name="FK_SavedAsm_Assignment">
+          <End Type="MBasm_AssignmentsModel.Assignment" Role="Assignment" Multiplicity="0..1" />
+          <End Type="MBasm_AssignmentsModel.SavedAsm" Role="SavedAsm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assignment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SavedAsm">
+              <PropertyRef Name="Assignment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Adminpp">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Gmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Userpp">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -326,14 +403,15 @@
           <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="JoinDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Feedbacks" Relationship="MBasm_AssignmentsModel.FK_Feedback_User" FromRole="User" ToRole="Feedback" />
-          <NavigationProperty Name="Orders" Relationship="MBasm_AssignmentsModel.FK_Order_User" FromRole="User" ToRole="Order" />
+          <NavigationProperty Name="Feedbacks" Relationship="MBasm_AssignmentsModel.FK_Feedback_User" FromRole="Userpp" ToRole="Feedback" />
+          <NavigationProperty Name="Orders" Relationship="MBasm_AssignmentsModel.FK_Order_User" FromRole="Userpp" ToRole="Order" />
+          <NavigationProperty Name="SavedAsms" Relationship="MBasm_AssignmentsModel.FK_SavedAsm_User" FromRole="Userpp" ToRole="SavedAsm" />
         </EntityType>
         <Association Name="FK_Feedback_User">
-          <End Type="MBasm_AssignmentsModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="MBasm_AssignmentsModel.Userpp" Role="Userpp" Multiplicity="0..1" />
           <End Type="MBasm_AssignmentsModel.Feedback" Role="Feedback" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Userpp">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Feedback">
@@ -342,10 +420,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_User">
-          <End Type="MBasm_AssignmentsModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="MBasm_AssignmentsModel.Userpp" Role="Userpp" Multiplicity="0..1" />
           <End Type="MBasm_AssignmentsModel.Order" Role="Order" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Userpp">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Order">
@@ -353,23 +431,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_SavedAsm_User">
+          <End Type="MBasm_AssignmentsModel.Userpp" Role="Userpp" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MBasm_AssignmentsModel.SavedAsm" Role="SavedAsm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Userpp">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SavedAsm">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MBasm_AssignmentsModelStoreContainer" CdmEntityContainer="MBasm_AssignmentsEntities">
-          <EntitySetMapping Name="Admins">
-            <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Admin">
-              <MappingFragment StoreEntitySet="Admin">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Gmail" ColumnName="Gmail" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Assignments">
             <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Assignment">
               <MappingFragment StoreEntitySet="Assignment">
@@ -432,9 +513,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="MBasm_AssignmentsModel.User">
-              <MappingFragment StoreEntitySet="User">
+          <EntitySetMapping Name="SavedAsms">
+            <EntityTypeMapping TypeName="MBasm_AssignmentsModel.SavedAsm">
+              <MappingFragment StoreEntitySet="SavedAsm">
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Assignment_id" ColumnName="Assignment_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Adminpps">
+            <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Adminpp">
+              <MappingFragment StoreEntitySet="Adminpp">
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Gmail" ColumnName="Gmail" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Userpps">
+            <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Userpp">
+              <MappingFragment StoreEntitySet="Userpp">
                 <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
                 <ScalarProperty Name="Avatar" ColumnName="Avatar" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

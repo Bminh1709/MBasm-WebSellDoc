@@ -1,4 +1,5 @@
-﻿using MBasmProject.Models;
+﻿using MBasmProject.Filter.Helper;
+using MBasmProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
