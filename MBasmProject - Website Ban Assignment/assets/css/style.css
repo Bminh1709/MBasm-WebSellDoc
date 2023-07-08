@@ -1175,18 +1175,18 @@ section {
   padding: 60px 0;
 }
 
-.team .member {
-  margin-bottom: 40px;
-  overflow: hidden;
-  border-radius: 5px;
-  background: #fff;
-  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
-}
+    .team .member {
+        margin-bottom: 40px;
+        overflow: hidden;
+        border-radius: 5px;
+        background: #fff;
+        box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    }
 
-.team .member .member-img {
-  position: relative;
-  overflow: hidden;
-}
+        .team .member .member-img {
+            position: relative;
+            overflow: hidden;
+        }
 
 .team .member .social {
   position: absolute;
@@ -1234,6 +1234,7 @@ section {
   margin-bottom: 5px;
   font-size: 18px;
   color: #151515;
+  width:180px;
 }
 
 .team .member .member-info span {

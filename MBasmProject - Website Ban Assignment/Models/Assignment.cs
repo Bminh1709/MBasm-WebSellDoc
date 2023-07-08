@@ -18,6 +18,7 @@ namespace MBasmProject.Models
         public Assignment()
         {
             this.Order_Detail = new HashSet<Order_Detail>();
+            this.SavedAsms = new HashSet<SavedAsm>();
         }
     
         public int Id { get; set; }
@@ -38,5 +39,7 @@ namespace MBasmProject.Models
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order_Detail> Order_Detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SavedAsm> SavedAsms { get; set; }
     }
 }

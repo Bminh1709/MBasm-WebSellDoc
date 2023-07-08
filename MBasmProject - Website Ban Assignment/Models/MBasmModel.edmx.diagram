@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="9cfab4dd9d014980abb8d381c7237f85" Name="Diagram1">
-        <EntityTypeShape EntityType="MBasm_AssignmentsModel.Admin" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MBasm_AssignmentsModel.Assignment" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MBasm_AssignmentsModel.Category" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="MBasm_AssignmentsModel.Feedback" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
@@ -14,10 +13,14 @@
         <AssociationConnector Association="MBasm_AssignmentsModel.FK_Assignment_Category" ManuallyRouted="false" />
         <AssociationConnector Association="MBasm_AssignmentsModel.FK_Order_Detail_Assignment" ManuallyRouted="false" />
         <AssociationConnector Association="MBasm_AssignmentsModel.FK_Order_Detail_Order" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="MBasm_AssignmentsModel.User" Width="1.5" PointX="0.75" PointY="2.625" />
+        <EntityTypeShape EntityType="MBasm_AssignmentsModel.SavedAsm" Width="1.5" PointX="5.25" PointY="7.5" />
+        <AssociationConnector Association="MBasm_AssignmentsModel.FK_SavedAsm_Assignment" />
+        <EntityTypeShape EntityType="MBasm_AssignmentsModel.Adminpp" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="MBasm_AssignmentsModel.Userpp" Width="1.5" PointX="0.75" PointY="3.875" />
         <AssociationConnector Association="MBasm_AssignmentsModel.FK_Feedback_User" />
         <AssociationConnector Association="MBasm_AssignmentsModel.FK_Order_User" />
-      </Diagram>
+        <AssociationConnector Association="MBasm_AssignmentsModel.FK_SavedAsm_User" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

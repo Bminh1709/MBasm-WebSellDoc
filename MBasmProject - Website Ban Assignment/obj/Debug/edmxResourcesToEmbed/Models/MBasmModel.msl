@@ -1,17 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="MBasm_AssignmentsModelStoreContainer" CdmEntityContainer="MBasm_AssignmentsEntities">
-    <EntitySetMapping Name="Admins">
-      <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Admin">
-        <MappingFragment StoreEntitySet="Admin">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="FullName" ColumnName="FullName" />
-          <ScalarProperty Name="Gmail" ColumnName="Gmail" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Avatar" ColumnName="Avatar" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Assignments">
       <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Assignment">
         <MappingFragment StoreEntitySet="Assignment">
@@ -74,9 +63,29 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="MBasm_AssignmentsModel.User">
-        <MappingFragment StoreEntitySet="User">
+    <EntitySetMapping Name="SavedAsms">
+      <EntityTypeMapping TypeName="MBasm_AssignmentsModel.SavedAsm">
+        <MappingFragment StoreEntitySet="SavedAsm">
+          <ScalarProperty Name="User_id" ColumnName="User_id" />
+          <ScalarProperty Name="Assignment_id" ColumnName="Assignment_id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Adminpps">
+      <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Adminpp">
+        <MappingFragment StoreEntitySet="Adminpp">
+          <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Gmail" ColumnName="Gmail" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Userpps">
+      <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Userpp">
+        <MappingFragment StoreEntitySet="Userpp">
           <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
           <ScalarProperty Name="Avatar" ColumnName="Avatar" />
           <ScalarProperty Name="Password" ColumnName="Password" />

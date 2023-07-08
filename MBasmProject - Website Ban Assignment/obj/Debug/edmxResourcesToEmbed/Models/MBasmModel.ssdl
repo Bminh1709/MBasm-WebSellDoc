@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="MBasm_AssignmentsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityType Name="Admin">
+  <EntityType Name="Adminpp">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -67,7 +67,15 @@
     <Property Name="Assignment_id" Type="int" />
     <Property Name="Price" Type="decimal" Precision="10" Scale="0" />
   </EntityType>
-  <EntityType Name="User">
+  <EntityType Name="SavedAsm">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Assignment_id" Type="int" />
+    <Property Name="User_id" Type="int" />
+  </EntityType>
+  <EntityType Name="Userpp">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -91,10 +99,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Feedback_User">
-    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Userpp" Type="Self.Userpp" Multiplicity="0..1" />
     <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="User">
+      <Principal Role="Userpp">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Feedback">
@@ -127,10 +135,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Order_User">
-    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Userpp" Type="Self.Userpp" Multiplicity="0..1" />
     <End Role="Order" Type="Self.Order" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="User">
+      <Principal Role="Userpp">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Order">
@@ -138,20 +146,49 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SavedAsm_Assignment">
+    <End Role="Assignment" Type="Self.Assignment" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SavedAsm" Type="Self.SavedAsm" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assignment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SavedAsm">
+        <PropertyRef Name="Assignment_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SavedAsm_User">
+    <End Role="Userpp" Type="Self.Userpp" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SavedAsm" Type="Self.SavedAsm" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Userpp">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SavedAsm">
+        <PropertyRef Name="User_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="MBasm_AssignmentsModelStoreContainer">
-    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Adminpp" EntityType="Self.Adminpp" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Assignment" EntityType="Self.Assignment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order_Detail" EntityType="Self.Order_Detail" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SavedAsm" EntityType="Self.SavedAsm" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Userpp" EntityType="Self.Userpp" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Assignment_Category" Association="Self.FK_Assignment_Category">
       <End Role="Category" EntitySet="Category" />
       <End Role="Assignment" EntitySet="Assignment" />
     </AssociationSet>
     <AssociationSet Name="FK_Feedback_User" Association="Self.FK_Feedback_User">
-      <End Role="User" EntitySet="User" />
+      <End Role="Userpp" EntitySet="Userpp" />
       <End Role="Feedback" EntitySet="Feedback" />
     </AssociationSet>
     <AssociationSet Name="FK_Order_Detail_Assignment" Association="Self.FK_Order_Detail_Assignment">
@@ -163,8 +200,16 @@
       <End Role="Order_Detail" EntitySet="Order_Detail" />
     </AssociationSet>
     <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
-      <End Role="User" EntitySet="User" />
+      <End Role="Userpp" EntitySet="Userpp" />
       <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SavedAsm_Assignment" Association="Self.FK_SavedAsm_Assignment">
+      <End Role="Assignment" EntitySet="Assignment" />
+      <End Role="SavedAsm" EntitySet="SavedAsm" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SavedAsm_User" Association="Self.FK_SavedAsm_User">
+      <End Role="Userpp" EntitySet="Userpp" />
+      <End Role="SavedAsm" EntitySet="SavedAsm" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -290,7 +290,10 @@ namespace MBasmProject.Areas.Admin.Controllers
                         }
                         else
                         {
-                            modelFound.Images += "," + newListImgs;
+                            if (!string.IsNullOrWhiteSpace(newListImgs))
+                            {
+                                modelFound.Images += "," + newListImgs;
+                            }    
                         }
 
                         // Handle file uploads

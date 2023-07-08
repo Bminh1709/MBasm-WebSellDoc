@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using MBasmProject.Models;
+using BCrypt.Net;
 
 namespace MBasmProject.Controllers
 {
@@ -17,17 +18,18 @@ namespace MBasmProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult Signup(User model)
+        public ActionResult Signup(Userpp model)
         {
             try
             {
                 using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
                 {
-                    var modelFound = db.Users.Count(x => x.Gmail == model.Gmail);
+                    var modelFound = db.Userpps.Count(x => x.Gmail == model.Gmail);
                     if (modelFound == 0)
                     {
+                        model.Password = BCrypt.Net.BCrypt.HashPassword(model.Password);
                         model.JoinDate = DateTime.Now;
-                        model = db.Users.Add(model);
+                        model = db.Userpps.Add(model);
                         db.SaveChanges();
                         return Json(new { success = true });
                     }
@@ -48,11 +50,22 @@ namespace MBasmProject.Controllers
             {
                 using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
                 {
-                    var user = db.Users.FirstOrDefault(x => x.Gmail == gmail && x.Password == password);
+                    var user = db.Userpps.FirstOrDefault(x => x.Gmail == gmail);
                     if (user != null)
                     {
-                        Session["User"] = user;
-                        return Json(new { success = true });
+                        bool isPasswordValid = BCrypt.Net.BCrypt.Verify(password, user.Password);
+                        if (isPasswordValid)
+                        {
+                            Session["User"] = user;
+                            Session["userId"] = user.Id;
+                            // false: valid only for the current session
+                            FormsAuthentication.SetAuthCookie(user.Gmail, false);
+                            return Json(new { success = true });
+                        }
+                        else
+                        {
+                            return Json(new { success = false });
+                        }
                     }
                     else
                         return Json(new { success = false });
@@ -66,8 +79,12 @@ namespace MBasmProject.Controllers
 
         public ActionResult Logout()
         {
-            Session.Remove("User");
-            FormsAuthentication.SignOut();
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                Session.Remove("User");
+                Session.Remove("userId");
+                FormsAuthentication.SignOut();
+            }
             return RedirectToAction("Index","Home");
         }
 

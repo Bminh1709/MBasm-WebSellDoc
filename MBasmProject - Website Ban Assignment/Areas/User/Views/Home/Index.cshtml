@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     ViewBag.ColorNav = "header-inner-pages";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,10 +10,10 @@
     <link href="~/assets/css/RadioBtn.css" rel="stylesheet" />
     <link href="~/assets/css/ProfileUser.css" rel="stylesheet" />
 }
-@section scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-}
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 <img class="vertical-img" src="~/assets/img/elements/Dark Gray Simple Happy Pi Day Flyer (1).png" />
 
@@ -38,13 +37,13 @@
                         <i class="fa-solid fa-bookmark"></i>
                         Saved Files
                     </a>
+                    <a class="nav-link" id="orderstatus-tab" data-toggle="pill" href="#orderstatus" role="tab" aria-controls="orderstatus" aria-selected="false">
+                        <i class="fa-solid fa-user"></i>
+                        Order Status
+                    </a>
                     <a class="nav-link" id="security-tab" data-toggle="pill" href="#security" role="tab" aria-controls="security" aria-selected="false">
                         <i class="fa-solid fa-user-pen"></i>
                         My Account
-                    </a>
-                    <a class="nav-link" id="password-tab" data-toggle="pill" href="#password" role="tab" aria-controls="password" aria-selected="false">
-                        <i class="fa-solid fa-bookmark"></i>
-                        Password
                     </a>
                 </div>
             </div>
@@ -55,9 +54,12 @@
                     @Html.Action("MyFiles")
                 </div>
 
-
                 <div class="tab-pane fade" id="savedfiles" role="tabpanel" aria-labelledby="savedfiles-tab">
                     @Html.Action("SavedFiles")
+                </div>
+
+                <div class="tab-pane fade" id="orderstatus" role="tabpanel" aria-labelledby="orderstatus-tab">
+                    @Html.Action("Order")
                 </div>
 
 
@@ -65,10 +67,12 @@
                     @Html.Action("MyAccount")
                 </div>
 
-                <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-                    @Html.Action("ChangePassword")
-                </div>
             </div>
         </div>
     </div>
 </section>
+
+
+
+
+
