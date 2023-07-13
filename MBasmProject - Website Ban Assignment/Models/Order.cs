@@ -24,7 +24,7 @@ namespace MBasmProject.Models
         public Nullable<int> User_id { get; set; }
         public string Note { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
-        public Nullable<int> TotalPrice { get; set; }
+        public Nullable<decimal> TotalPrice { get; set; }
         public Nullable<int> Quanitty { get; set; }
         public Nullable<bool> Status { get; set; }
     

@@ -40,19 +40,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Orders">
-      <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Order">
-        <MappingFragment StoreEntitySet="Order">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="User_id" ColumnName="User_id" />
-          <ScalarProperty Name="Note" ColumnName="Note" />
-          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-          <ScalarProperty Name="Quanitty" ColumnName="Quanitty" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Order_Detail">
       <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Order_Detail">
         <MappingFragment StoreEntitySet="Order_Detail">
@@ -91,6 +78,28 @@
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Gmail" ColumnName="Gmail" />
           <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Carts">
+      <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Cart">
+        <MappingFragment StoreEntitySet="Cart">
+          <ScalarProperty Name="User_id" ColumnName="User_id" />
+          <ScalarProperty Name="Assignment_id" ColumnName="Assignment_id" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Quanitty" ColumnName="Quanitty" />
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="User_id" ColumnName="User_id" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

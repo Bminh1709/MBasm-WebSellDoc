@@ -1,0 +1,130 @@
+﻿@model IEnumerable<MBasmProject.Models.Cart>
+@using MBasmProject.Models;
+@using System.Data.Entity;
+
+@{
+    ViewBag.Title = "Receipt";
+    var user = Session["User"] as Userpp;
+    int userId = (int)Session["userId"];
+    MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities();
+    ViewData["lstCart"] = db.Carts.Include(s => s.Assignment)
+                             .Include(s => s.Assignment.Category)
+                             .Where(s => s.User_id == userId)
+                             .ToList();
+}
+
+<link href="~/assets/css/Cart.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="col-md-12">
+        <div class="invoice">
+            <!-- begin invoice-company -->
+            <div class="invoice-company text-inverse f-w-600">
+                MB asm, Inc
+                <span class="pull-right hidden-print" style="float:right;">
+                    <a href="@Url.Action("ExportPDF")" class="btn btn-sm btn-white m-b-10 p-l-5"> Export as PDF</a>
+                </span>
+            </div>
+            <!-- end invoice-company -->
+            <!-- begin invoice-header -->
+            <div class="invoice-header">
+                <div class="invoice-from">
+                    <small>from</small>
+                    <address class="m-t-5 m-b-5">
+                        <strong class="text-inverse">MB asm, Inc.</strong><br>
+                        Phone: 070 616 2561<br>
+                        Mail: minhbee203@gmail.com
+                    </address>
+                </div>
+                <div class="invoice-to">
+                    @{
+                        if (user != null)
+                        {
+                            <small>to</small>
+                            <address class="m-t-5 m-b-5">
+                                <strong class="text-inverse">@user.Fullname</strong><br>
+                                @user.Gmail<br>
+                            </address>
+                        }
+                    }
+                </div>
+                <div class="invoice-date">
+                    <small>Invoice</small>
+                    <div class="date text-inverse m-t-5">@DateTime.Now</div>
+                    <div class="invoice-detail">
+                        #@ViewBag.OrderNum<br>
+                    </div>
+                </div>
+            </div>
+            <!-- end invoice-header -->
+            <!-- begin invoice-content -->
+            <div class="invoice-content">
+                <!-- begin table-responsive -->
+                <div class="table-responsive m-auto" style=" width: 80%;">
+                    <table class="table table-invoice">
+                        <thead>
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Title</th>
+                                <th class="text-center">Category</th>
+                                <th class="text-center">Grade</th>
+                                <th class="text-right">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in (List<Cart>)ViewData["lstCart"])
+                                {
+                                    <tr>
+                                        <td class="text-center">@item.Assignment_id</td>
+                                        <td class="text-center">@item.Assignment.Title</td>
+                                        <td class="text-center">@((item.Assignment.Category != null) ? item.Assignment.Category.Name : "N/A")</td>
+                                        <td class="text-center">@item.Assignment.Grade</td>
+                                        <td class="text-right text-danger">@string.Format("{0:0,000}", item.Assignment.Price).Replace(",", ".")</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end table-responsive -->
+                <!-- begin invoice-price -->
+                <div class="invoice-price">
+                    <div class="invoice-price-left">
+                        <div class="invoice-price-row">
+                            <div class="sub-price">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="invoice-price-right">
+                        @{
+                            decimal totalPrice = 0;
+                            foreach (var item in (List<Cart>)ViewData["lstCart"])
+                            {
+                                if (item.Assignment.Price.HasValue)
+                                {
+                                    totalPrice += item.Assignment.Price.Value;
+                                }
+                            }
+                        }
+                        <span class="f-w-600">@string.Format("{0:0,000}", totalPrice).Replace(",", ".")</span>VND
+                    </div>
+                </div>
+                <!-- end invoice-price -->
+            </div>
+            <!-- end invoice-content -->
+            <!-- begin invoice-footer -->
+            <div class="invoice-footer">
+                <p class="text-center m-b-5 f-w-600">
+                    THANK YOU FOR YOUR BUSINESS
+                </p>
+                <p class="text-center">
+                    <span class="m-r-10"><i class="fa fa-fw fa-lg fa-globe"></i> mbasm.com</span>
+                    <span class="m-r-10"><i class="fa fa-fw fa-lg fa-phone-volume"></i> T:070 616 2561</span>
+                    <span class="m-r-10"><i class="fa fa-fw fa-lg fa-envelope"></i> minhbee203@gmail.com</span>
+                </p>
+            </div>
+            <!-- end invoice-footer -->
+        </div>
+    </div>
+</div>

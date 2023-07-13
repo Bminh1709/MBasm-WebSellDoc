@@ -83,14 +83,18 @@
             @{
                 if (user != null)
                 {
-                    <div class="profile-button">
-                        <a href="/User/Home" class="docs">
-                            Welcome back "@user.Fullname"
-                        </a>
-                        <a href="/Access/Logout" class="logout-button">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                        </a>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a href="/User/Cart" class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></a>
+                        <div class="profile-button">
+                            <a href="/User/Home" class="docs">
+                                Welcome back "@user.Fullname"
+                            </a>
+                            <a href="/Access/Logout" class="logout-button">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </a>
+                        </div>
                     </div>
+
                 }
                 else
                 {
@@ -172,6 +176,10 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
     <!-- Block other to view code - open to view source -->
     <script src="~/assets/js/main.js"></script>

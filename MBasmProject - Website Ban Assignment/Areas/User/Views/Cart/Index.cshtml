@@ -1,0 +1,152 @@
+﻿@model IEnumerable<MBasmProject.Models.Cart>
+@using MBasmProject.Models;
+@{
+    ViewBag.Title = "Index";
+    ViewBag.ColorNav = "header-inner-pages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section htmlstyle {
+    <link href="~/assets/css/Cart.css" rel="stylesheet" />
+}
+
+
+<main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>My Cart</h2>
+            </div>
+
+        </div>
+    </section><!-- End Breadcrumbs -->
+
+    <div class="container">
+        <div class="col-md-12">
+            <div class="invoice">
+                <!-- begin invoice-content -->
+                <div class="invoice-content" id="invoice-content">
+                    <!-- begin table-responsive -->
+                    <div class="table-responsive m-auto" style=" width: 80%;">
+                        <table class="table table-invoice">
+                            <thead>
+                                <tr>
+                                    <th>ASSIGNMENT</th>
+                                    <th class="text-center">Title</th>
+                                    <th class="text-center">Category</th>
+                                    <th class="text-center">Grade</th>
+                                    <th class="text-right">Price</th>
+                                    <th class="text-center">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var item in Model)
+                                    {
+                                        <tr id="trow_@item.Id">
+                                            @{
+                                                if (!string.IsNullOrEmpty(item.Assignment.Images))
+                                                {
+                                                    string[] images = item.Assignment.Images.Split(',');
+                                                    <td><img class="img-Cart" src="~/assets/img/Asm/@images[0]" /></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><img class="img-tiniPreview" src="~/assets/img/Asm/No-Image.svg.png" /></td>
+                                                }
+                                            }
+                                            <td class="text-center">@item.Assignment.Title</td>
+                                            <td class="text-center">@((item.Assignment.Category != null) ? item.Assignment.Category.Name : "N/A")</td>
+                                            <td class="text-center">@item.Assignment.Grade</td>
+                                            <td class="text-right text-danger">@string.Format("{0:0,000}", item.Assignment.Price).Replace(",", ".")</td>
+                                            <td class="text-center">
+                                                <button class="btn-deleteCart Unstyle-btn" data-id="@item.Id">
+                                                    <i class="fa-solid fa-xmark text-danger"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end table-responsive -->
+                    <!-- begin invoice-price -->
+                    <div class="invoice-price">
+                        <div class="invoice-price-left">
+                            <div class="invoice-price-row">
+                                <div class="sub-price">
+                                    <small>Total</small>
+                                    @{
+                                        decimal totalPrice = 0;
+                                        foreach (var item in Model)
+                                        {
+                                            if (item.Assignment.Price.HasValue)
+                                            {
+                                                totalPrice += item.Assignment.Price.Value;
+                                            }
+                                        }
+                                    }
+                                    <span class="text-inverse" id="totalPriceInput">@string.Format("{0:0,000}", totalPrice).Replace(",", ".")<span style=" font-size: 15px;">VND</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" style=" border: none; width: 100%;" data-toggle="modal" data-target="#paymentModal">
+                            <div class="invoice-price-right">
+                                <span class="f-w-600">PURCHASE</span>
+                            </div>
+                        </button>
+                    </div>
+                    <!-- end invoice-price -->
+                </div>
+                <!-- end invoice-content -->
+                <!-- begin invoice-note -->
+                <div class="invoice-note">
+                    * Make sure to find exactly the subject you want<br>
+                    * We cannot make a return when you purchased successfully<br>
+                    * If you have any questions concerning my assignments, contact me at minhbee203@gmail.com
+                </div>
+                <!-- end invoice-note -->
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- Modal -->
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <button style=" border: unset; background: unset;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align:center;">
+                <p>
+                    Remember that you have 2 hours left to make the payment!
+                    Below is my account information <br />
+                    * Bạn nhớ thanh toán trong vòng 2 giờ sau khi đơn hàng được mua nhé, thông tin ở dưới!
+                </p>
+                <img width="300" src="~/assets/img/elements/bank.jpg" />
+                <div style=" display: flex; margin-top: 20px;">
+                    <label>(*) Note</label>
+                    <textarea id="InputNote" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn" id="btn-payment" style="background:#ffc451">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript" src="@Url.Content("~/ScriptsAjax/Order.js")"></script>
+}
+

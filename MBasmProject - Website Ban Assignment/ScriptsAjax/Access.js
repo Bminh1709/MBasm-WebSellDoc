@@ -7,7 +7,7 @@
         var email_pattern = /^[a-zA-Z]\w*(\w+)*\@\w+(\.\w{2,3})$/;
 
         if (f.Fullname.value == "") {
-            alert("Name cannot be empty");
+            alert("Your name is required");
             f.Fullname.focus();
             return false;
         }

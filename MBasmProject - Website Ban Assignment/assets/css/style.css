@@ -13,12 +13,24 @@ body {
   font-family: "Open Sans", sans-serif;
   color: #444444;
 }
-.btn-carousel {
-    background: #a2a2a2;
-    height: 90px;
-    width: 75px;
-    top: 42%;
+.cart-btn {
+    margin-right: 5px;
+    color: #c0c0c0;
 }
+.Unstyle-btn {
+    border: none;
+    background: unset;
+}
+    .cart-btn:hover {
+        color: #ffc451;
+        cursor:pointer;
+    }
+    .btn-carousel {
+        background: #a2a2a2;
+        height: 90px;
+        width: 75px;
+        top: 42%;
+    }
 .carousel-control-prev-icon {
     margin-left: unset;
 }

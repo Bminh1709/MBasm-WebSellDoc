@@ -70,7 +70,7 @@
                     else {
                         if (rs.incorrectPass) {
                             var messageContainer = $('.PassMsg');
-                            messageContainer.text('Incorrect password!');
+                            messageContainer.fadeIn().text('Incorrect password!');
                             messageContainer.fadeOut(3000);
                         }
                         else {
