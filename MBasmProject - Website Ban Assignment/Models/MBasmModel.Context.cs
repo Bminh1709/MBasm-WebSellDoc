@@ -28,10 +28,11 @@ namespace MBasmProject.Models
         public virtual DbSet<Assignment> Assignments { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Order_Detail> Order_Detail { get; set; }
         public virtual DbSet<SavedAsm> SavedAsms { get; set; }
         public virtual DbSet<Adminpp> Adminpps { get; set; }
         public virtual DbSet<Userpp> Userpps { get; set; }
+        public virtual DbSet<Cart> Carts { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
     }
 }

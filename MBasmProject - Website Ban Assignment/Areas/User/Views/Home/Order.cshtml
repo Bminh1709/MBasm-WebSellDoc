@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<MBasmProject.Models.Order>
 @{
     Layout = null;
 }
@@ -8,21 +8,39 @@
     <thead>
         <tr>
             <th>Id</th>
-            <th>Title</th>
-            <th>Grade</th>
+            <th>Note</th>
+            <th>Date</th>
+            <th>Quantity</th>
             <th>Price</th>
-            <th>Type</th>
-            <th>Download</th>
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>Domenic</td>
-            <td>M</td>
-            <td>20000</td>
-            <td>PDF</td>
-            <td><i class="fa-solid fa-file-arrow-down"></i></td>
-        </tr>
+        @{
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Note</td>
+                    <td>@string.Format("{0:dd/MM/yy}", item.OrderDate)</td>
+                    <td>@item.Quanitty</td>
+                    <td>@string.Format("{0:0,000}", item.TotalPrice).Replace(",", ".")</td>
+                    @{
+                        if (item.Status == true)
+                        {
+                            <td style="color: green">
+                                Finish
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="color: #ad0909">
+                                Pending
+                            </td>
+                        }
+                    }
+                </tr>
+            }
+        }
     </tbody>
 </table>

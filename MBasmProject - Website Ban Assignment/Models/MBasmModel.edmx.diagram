@@ -8,18 +8,21 @@
         <EntityTypeShape EntityType="MBasm_AssignmentsModel.Assignment" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MBasm_AssignmentsModel.Category" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="MBasm_AssignmentsModel.Feedback" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="MBasm_AssignmentsModel.Order" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MBasm_AssignmentsModel.Order_Detail" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
         <AssociationConnector Association="MBasm_AssignmentsModel.FK_Assignment_Category" ManuallyRouted="false" />
         <AssociationConnector Association="MBasm_AssignmentsModel.FK_Order_Detail_Assignment" ManuallyRouted="false" />
-        <AssociationConnector Association="MBasm_AssignmentsModel.FK_Order_Detail_Order" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MBasm_AssignmentsModel.SavedAsm" Width="1.5" PointX="5.25" PointY="7.5" />
         <AssociationConnector Association="MBasm_AssignmentsModel.FK_SavedAsm_Assignment" />
         <EntityTypeShape EntityType="MBasm_AssignmentsModel.Adminpp" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="MBasm_AssignmentsModel.Userpp" Width="1.5" PointX="0.75" PointY="3.875" />
         <AssociationConnector Association="MBasm_AssignmentsModel.FK_Feedback_User" />
-        <AssociationConnector Association="MBasm_AssignmentsModel.FK_Order_User" />
         <AssociationConnector Association="MBasm_AssignmentsModel.FK_SavedAsm_User" />
+        <EntityTypeShape EntityType="MBasm_AssignmentsModel.Cart" Width="1.5" PointX="5.25" PointY="10.25" />
+        <AssociationConnector Association="MBasm_AssignmentsModel.FK_Cart_Assignment" />
+        <AssociationConnector Association="MBasm_AssignmentsModel.FK_Cart_Userpp" />
+        <EntityTypeShape EntityType="MBasm_AssignmentsModel.Order" Width="1.5" PointX="3" PointY="4" />
+        <AssociationConnector Association="MBasm_AssignmentsModel.FK_Order_Detail_Order" />
+        <AssociationConnector Association="MBasm_AssignmentsModel.FK_Order_User" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

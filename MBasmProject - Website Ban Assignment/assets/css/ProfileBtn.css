@@ -62,7 +62,7 @@
         }
 
 .profile-button:hover .logout-button {
-    transform: translateY(100%);
+    transform: translateY(65%);
 }
     .profile-button:hover .logout-button i {
         opacity: 1;

@@ -34,6 +34,14 @@
           <Property Name="FilePdf" Type="nvarchar(max)" />
           <Property Name="FilePptx" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Assignment_id" Type="int" />
+          <Property Name="User_id" Type="int" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="Id" />
@@ -59,7 +67,7 @@
           <Property Name="User_id" Type="int" />
           <Property Name="Note" Type="nvarchar(max)" />
           <Property Name="OrderDate" Type="datetime" />
-          <Property Name="TotalPrice" Type="int" />
+          <Property Name="TotalPrice" Type="decimal" Precision="10" Scale="0" />
           <Property Name="Quanitty" Type="int" />
           <Property Name="Status" Type="bit" />
         </EntityType>
@@ -100,6 +108,34 @@
             </Principal>
             <Dependent Role="Assignment">
               <PropertyRef Name="Category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cart_Assignment">
+          <End Role="Assignment" Type="Self.Assignment" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assignment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="Assignment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cart_Userpp">
+          <End Role="Userpp" Type="Self.Userpp" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Userpp">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="User_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -182,6 +218,7 @@
         <EntityContainer Name="MBasm_AssignmentsModelStoreContainer">
           <EntitySet Name="Adminpp" EntityType="Self.Adminpp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Assignment" EntityType="Self.Assignment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
@@ -191,6 +228,14 @@
           <AssociationSet Name="FK_Assignment_Category" Association="Self.FK_Assignment_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="Assignment" EntitySet="Assignment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cart_Assignment" Association="Self.FK_Cart_Assignment">
+            <End Role="Assignment" EntitySet="Assignment" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cart_Userpp" Association="Self.FK_Cart_Userpp">
+            <End Role="Userpp" EntitySet="Userpp" />
+            <End Role="Cart" EntitySet="Cart" />
           </AssociationSet>
           <AssociationSet Name="FK_Feedback_User" Association="Self.FK_Feedback_User">
             <End Role="Userpp" EntitySet="Userpp" />
@@ -242,6 +287,7 @@
           <NavigationProperty Name="Category" Relationship="Self.FK_Assignment_Category" FromRole="Assignment" ToRole="Category" />
           <NavigationProperty Name="Order_Detail" Relationship="Self.FK_Order_Detail_Assignment" FromRole="Assignment" ToRole="Order_Detail" />
           <NavigationProperty Name="SavedAsms" Relationship="MBasm_AssignmentsModel.FK_SavedAsm_Assignment" FromRole="Assignment" ToRole="SavedAsm" />
+          <NavigationProperty Name="Carts" Relationship="MBasm_AssignmentsModel.FK_Cart_Assignment" FromRole="Assignment" ToRole="Cart" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -262,20 +308,6 @@
           <Property Name="IsRead" Type="Boolean" />
           <NavigationProperty Name="Userpp" Relationship="MBasm_AssignmentsModel.FK_Feedback_User" FromRole="Feedback" ToRole="Userpp" />
         </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_id" Type="Int32" />
-          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OrderDate" Type="DateTime" Precision="3" />
-          <Property Name="TotalPrice" Type="Int32" />
-          <Property Name="Quanitty" Type="Int32" />
-          <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="Order_Detail" Relationship="Self.FK_Order_Detail_Order" FromRole="Order" ToRole="Order_Detail" />
-          <NavigationProperty Name="Userpp" Relationship="MBasm_AssignmentsModel.FK_Order_User" FromRole="Order" ToRole="Userpp" />
-        </EntityType>
         <EntityType Name="Order_Detail">
           <Key>
             <PropertyRef Name="Id" />
@@ -285,7 +317,7 @@
           <Property Name="Assignment_id" Type="Int32" />
           <Property Name="Price" Type="Decimal" Precision="10" Scale="0" />
           <NavigationProperty Name="Assignment" Relationship="Self.FK_Order_Detail_Assignment" FromRole="Order_Detail" ToRole="Assignment" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Detail_Order" FromRole="Order_Detail" ToRole="Order" />
+          <NavigationProperty Name="Order" Relationship="MBasm_AssignmentsModel.FK_Order_Detail_Order" FromRole="Order_Detail" ToRole="Order" />
         </EntityType>
         <Association Name="FK_Assignment_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
@@ -311,23 +343,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Order_Detail_Order">
-          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
-          <End Role="Order_Detail" Type="Self.Order_Detail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Order_Detail">
-              <PropertyRef Name="Order_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="MBasm_AssignmentsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Assignments" EntityType="Self.Assignment" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
-          <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Order_Detail" EntityType="Self.Order_Detail" />
           <AssociationSet Name="FK_Assignment_Category" Association="Self.FK_Assignment_Category">
             <End Role="Category" EntitySet="Categories" />
@@ -335,10 +354,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Order_Detail_Assignment" Association="Self.FK_Order_Detail_Assignment">
             <End Role="Assignment" EntitySet="Assignments" />
-            <End Role="Order_Detail" EntitySet="Order_Detail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Detail_Order" Association="Self.FK_Order_Detail_Order">
-            <End Role="Order" EntitySet="Orders" />
             <End Role="Order_Detail" EntitySet="Order_Detail" />
           </AssociationSet>
           <EntitySet Name="SavedAsms" EntityType="MBasm_AssignmentsModel.SavedAsm" />
@@ -352,13 +367,27 @@
             <End Role="Userpp" EntitySet="Userpps" />
             <End Role="Feedback" EntitySet="Feedbacks" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_User" Association="MBasm_AssignmentsModel.FK_Order_User">
-            <End Role="Userpp" EntitySet="Userpps" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
           <AssociationSet Name="FK_SavedAsm_User" Association="MBasm_AssignmentsModel.FK_SavedAsm_User">
             <End Role="Userpp" EntitySet="Userpps" />
             <End Role="SavedAsm" EntitySet="SavedAsms" />
+          </AssociationSet>
+          <EntitySet Name="Carts" EntityType="MBasm_AssignmentsModel.Cart" />
+          <AssociationSet Name="FK_Cart_Assignment" Association="MBasm_AssignmentsModel.FK_Cart_Assignment">
+            <End Role="Assignment" EntitySet="Assignments" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cart_Userpp" Association="MBasm_AssignmentsModel.FK_Cart_Userpp">
+            <End Role="Userpp" EntitySet="Userpps" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <EntitySet Name="Orders" EntityType="MBasm_AssignmentsModel.Order" />
+          <AssociationSet Name="FK_Order_Detail_Order" Association="MBasm_AssignmentsModel.FK_Order_Detail_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Order_Detail" EntitySet="Order_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="MBasm_AssignmentsModel.FK_Order_User">
+            <End Role="Userpp" EntitySet="Userpps" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="SavedAsm">
@@ -404,8 +433,9 @@
           <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="JoinDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Feedbacks" Relationship="MBasm_AssignmentsModel.FK_Feedback_User" FromRole="Userpp" ToRole="Feedback" />
-          <NavigationProperty Name="Orders" Relationship="MBasm_AssignmentsModel.FK_Order_User" FromRole="Userpp" ToRole="Order" />
           <NavigationProperty Name="SavedAsms" Relationship="MBasm_AssignmentsModel.FK_SavedAsm_User" FromRole="Userpp" ToRole="SavedAsm" />
+          <NavigationProperty Name="Carts" Relationship="MBasm_AssignmentsModel.FK_Cart_Userpp" FromRole="Userpp" ToRole="Cart" />
+          <NavigationProperty Name="Orders" Relationship="MBasm_AssignmentsModel.FK_Order_User" FromRole="Userpp" ToRole="Order" />
         </EntityType>
         <Association Name="FK_Feedback_User">
           <End Type="MBasm_AssignmentsModel.Userpp" Role="Userpp" Multiplicity="0..1" />
@@ -415,18 +445,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Feedback">
-              <PropertyRef Name="User_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_User">
-          <End Type="MBasm_AssignmentsModel.Userpp" Role="Userpp" Multiplicity="0..1" />
-          <End Type="MBasm_AssignmentsModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Userpp">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Order">
               <PropertyRef Name="User_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -441,6 +459,82 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="SavedAsm">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Assignment_id" Type="Int32" />
+          <Property Name="User_id" Type="Int32" />
+          <NavigationProperty Name="Assignment" Relationship="MBasm_AssignmentsModel.FK_Cart_Assignment" FromRole="Cart" ToRole="Assignment" />
+          <NavigationProperty Name="Userpp" Relationship="MBasm_AssignmentsModel.FK_Cart_Userpp" FromRole="Cart" ToRole="Userpp" />
+        </EntityType>
+        <Association Name="FK_Cart_Assignment">
+          <End Type="MBasm_AssignmentsModel.Assignment" Role="Assignment" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MBasm_AssignmentsModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assignment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="Assignment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cart_Userpp">
+          <End Type="MBasm_AssignmentsModel.Userpp" Role="Userpp" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MBasm_AssignmentsModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Userpp">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_id" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="Quanitty" Type="Int32" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="Order_Detail" Relationship="MBasm_AssignmentsModel.FK_Order_Detail_Order" FromRole="Order" ToRole="Order_Detail" />
+          <NavigationProperty Name="Userpp" Relationship="MBasm_AssignmentsModel.FK_Order_User" FromRole="Order" ToRole="Userpp" />
+        </EntityType>
+        <Association Name="FK_Order_Detail_Order">
+          <End Type="MBasm_AssignmentsModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="MBasm_AssignmentsModel.Order_Detail" Role="Order_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order_Detail">
+              <PropertyRef Name="Order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Type="MBasm_AssignmentsModel.Userpp" Role="Userpp" Multiplicity="0..1" />
+          <End Type="MBasm_AssignmentsModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Userpp">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
               <PropertyRef Name="User_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -490,19 +584,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Order">
-              <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="User_id" ColumnName="User_id" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="Quanitty" ColumnName="Quanitty" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Order_Detail">
             <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Order_Detail">
               <MappingFragment StoreEntitySet="Order_Detail">
@@ -541,6 +622,28 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Gmail" ColumnName="Gmail" />
                 <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="Assignment_id" ColumnName="Assignment_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Quanitty" ColumnName="Quanitty" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

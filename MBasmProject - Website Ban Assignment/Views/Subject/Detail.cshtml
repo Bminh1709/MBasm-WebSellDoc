@@ -77,7 +77,7 @@
                         </div>
 
                         <div style="display:flex;">
-                            <button id="btn-cart" style="margin:5px;">
+                            <button id="btn-addCart" data-id="@Model.Id" style="margin:5px;">
                                 <div class="svg-wrapper-1">
                                     <div class="svg-wrapper">
                                         <i class="fas fa-solid fa-cart-shopping yellow-Color" style="height: 24px; width: 24px; margin-right: 5px;"></i>
@@ -86,7 +86,7 @@
                                 <span>Cart</span>
                             </button>
 
-                            <button id="btn-save" style="margin:5px;">
+                            <button id="btn-save" data-id="@Model.Id" style="margin:5px;">
                                 <div class="svg-wrapper-1">
                                     <div class="svg-wrapper">
                                         <i class="fa-solid fa-bookmark yellow-Color" style="height: 24px; width: 24px; margin-right: 5px;"></i>
@@ -107,38 +107,8 @@
         </div>
     </section><!-- End Portfolio Details Section -->
 
+
     @section scripts {
-
-        <script>
-            $('#btn-save').on('click', function () {
-                var asm_id = '@Model.Id';
-
-                $.ajax({
-                    url: "/User/home/SavedFiles",
-                    method: "POST",
-                    data: { asmId: asm_id },
-                    success: function (rs) {
-                        if (rs.success) {
-                            var messageContainer = $('#messageCart');
-                            messageContainer.attr('style', 'margin: auto; width: fit-content; color: #007bff;').text('Success!');
-                            messageContainer.fadeOut(3000);
-                        }
-                        else {
-                            if (rs.exist) {
-                                var messageContainer = $('#messageCart');
-                                messageContainer.attr('style', 'margin: auto; width: fit-content; color: #b60000;').text('You saved this!');
-                                messageContainer.fadeOut(3000);
-                            }
-                            else {
-                                var messageContainer = $('#messageCart');
-                                messageContainer.attr('style', 'margin: auto; width: fit-content; color: #b60000;').text('Please Sign in!');
-                                messageContainer.fadeOut(3000);
-                            }
-                        }
-                    }
-                });
-            });
-        </script>
-
+        <script type="text/javascript" src="@Url.Content("~/ScriptsAjax/CartAndSave.js")"></script>
     }
 </main>

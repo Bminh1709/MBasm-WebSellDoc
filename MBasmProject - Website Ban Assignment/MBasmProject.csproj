@@ -61,6 +61,9 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -138,6 +141,7 @@
     <Compile Include="Areas\Admin\Controllers\AccessController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubjectController.cs" />
+    <Compile Include="Areas\User\Controllers\CartController.cs" />
     <Compile Include="Areas\User\Controllers\HomeController.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Controllers\AccessController.cs" />
@@ -155,6 +159,9 @@
       <DependentUpon>MBasmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Assignment.cs">
+      <DependentUpon>MBasmModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cart.cs">
       <DependentUpon>MBasmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Category.cs">
@@ -572,6 +579,7 @@
     <Content Include="Areas\Admin\assets\libs\simplebar\src\simplebar.js" />
     <Content Include="assets\css\Access.css" />
     <Content Include="assets\css\btn.css" />
+    <Content Include="assets\css\Cart.css" />
     <Content Include="assets\css\Cartbutton.css" />
     <Content Include="assets\css\ErrorPage.css" />
     <Content Include="assets\css\ProfileBtn.css" />
@@ -613,6 +621,7 @@
     <Content Include="assets\img\Creative.png" />
     <Content Include="assets\img\cta-bg.jpg" />
     <Content Include="assets\img\elements\addimgicon.png" />
+    <Content Include="assets\img\elements\bank.jpg" />
     <Content Include="assets\img\elements\Dark Gray Simple Happy Pi Day Flyer %281%29.png" />
     <Content Include="assets\img\elements\Dark Gray Simple Happy Pi Day Flyer.png" />
     <Content Include="assets\img\elements\people-g8eb63928e_1280.jpg" />
@@ -704,10 +713,16 @@
       <DependentUpon>MBasmModel.edmx</DependentUpon>
       <LastGenOutput>MBasmModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="ScriptsAjax\Access.js" />
     <Content Include="ScriptsAjax\Assignment.js" />
+    <Content Include="ScriptsAjax\CartAndSave.js" />
     <Content Include="ScriptsAjax\Category.js" />
     <Content Include="ScriptsAjax\Filter.js" />
+    <Content Include="ScriptsAjax\Order.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -743,7 +758,6 @@
     <Content Include="assets\vendor\bootstrap\js\bootstrap.min.js.map" />
     <EntityDeploy Include="Models\MBasmModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MBasmModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\MBasmModel.edmx.diagram">
       <DependentUpon>MBasmModel.edmx</DependentUpon>
@@ -1023,6 +1037,9 @@
     <Content Include="Areas\Admin\Views\Subject\Category.cshtml" />
     <Content Include="Areas\Admin\Views\Subject\UpdateAsm.cshtml" />
     <Content Include="Areas\User\Views\Home\SavedFiles.cshtml" />
+    <Content Include="Areas\User\Views\Cart\Index.cshtml" />
+    <Content Include="Areas\User\Views\Cart\Payment.cshtml" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1052,6 +1069,7 @@
     <Content Include="Views\Subject\Index.cshtml" />
     <Content Include="Views\Subject\Detail.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Shared\Redirect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\FileDocx\" />

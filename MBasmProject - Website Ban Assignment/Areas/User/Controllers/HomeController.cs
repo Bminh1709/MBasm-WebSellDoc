@@ -21,7 +21,24 @@ namespace MBasmProject.Areas.User.Controllers
         [BlockDirectAccess]
         public ActionResult MyFiles()
         {
-            return View();
+            try
+            {
+                using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
+                {
+                    int userId = (int)Session["userId"];
+                    List<Order> lstAsms = db.Orders
+                        .Include(o => o.Order_Detail)
+                        .Include("Order_Detail.Assignment")
+                        .Where(o => o.User_id == userId)
+                        .ToList();
+                    return View(lstAsms);
+                }
+            }
+            catch (Exception)
+            {
+
+                return PartialView("Redirect");
+            }
         }
         [BlockDirectAccess]
         public ActionResult SavedFiles()
@@ -31,13 +48,18 @@ namespace MBasmProject.Areas.User.Controllers
                 using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
                 {
                     // If using this - add "using System.Data.Entity;"
-                    List<SavedAsm> lstSavedAsm = db.SavedAsms.Include(s => s.Assignment).ToList();
+                    int userId = (int)Session["userId"];
+
+                    var lstSavedAsm = db.SavedAsms
+                        .Include(s => s.Assignment)
+                        .Where(s => s.User_id == userId)
+                        .ToList();
                     return View(lstSavedAsm);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
+                return PartialView("Redirect");
             }
         }
 
@@ -81,9 +103,9 @@ namespace MBasmProject.Areas.User.Controllers
                     return Json(new { success = true });
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
+                return Json(new { success = false });
             }
         }
 
@@ -115,8 +137,21 @@ namespace MBasmProject.Areas.User.Controllers
         [BlockDirectAccess]
         public ActionResult Order()
         {
-            return View();
+            try
+            {
+                using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
+                {
+                    int userId = (int)Session["userId"];
+                    List<Order> lstOrder = db.Orders.Where(s => s.User_id == userId).ToList();
+                    return View(lstOrder);
+                }
+            }
+            catch (Exception)
+            {
+                return PartialView("Redirect");
+            }
         }
+        [CustomAuthentication]
         [BlockDirectAccess]
         public ActionResult MyAccount()
         {
@@ -124,21 +159,21 @@ namespace MBasmProject.Areas.User.Controllers
             {
                 using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
                 {
-                    if (Session["userId"] != null)
-                    {
+                    //if (Session["userId"] != null)
+                    //{
                         int user_id = (int)Session["userId"];
                         var userFound = db.Userpps.Find(user_id);
                         return View(userFound);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    //}
+                    //else
+                    //{
+                    //    return PartialView("Redirect");
+                    //}
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
+                return PartialView("Redirect");
             }
         }
         [HttpPost]

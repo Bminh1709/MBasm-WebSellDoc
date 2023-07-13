@@ -166,3 +166,4 @@ D:\Project IT\MB asm - Website bán document\MBasmProject-Stable-backup\MBasm-We
 D:\Project IT\MB asm - Website bán document\MBasmProject-Stable-backup\MBasm-WebSellDoc\MBasmProject - Website Ban Assignment\bin\roslyn\VBCSCompiler.exe.config
 D:\Project IT\MB asm - Website bán document\MBasmProject-Stable-backup\MBasm-WebSellDoc\MBasmProject - Website Ban Assignment\bin\BCrypt.Net.dll
 D:\Project IT\MB asm - Website bán document\MBasmProject-Stable-backup\MBasm-WebSellDoc\MBasmProject - Website Ban Assignment\bin\BCrypt.Net.xml
+D:\Project IT\MB asm - Website bán document\MBasmProject-Stable-backup\MBasm-WebSellDoc\MBasmProject - Website Ban Assignment\bin\Rotativa.dll
