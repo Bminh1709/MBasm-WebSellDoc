@@ -4,6 +4,10 @@
     background: #f9f9f9;
     font-family: "Roboto", sans-serif;
 }*/
+#changeAvt:hover {
+    content: url("/assets/img/elements/addavt.jpg");
+    cursor: pointer;
+}
 .nav-pills a.nav-link.active {
     color: black;
     background-color: #ffc451;

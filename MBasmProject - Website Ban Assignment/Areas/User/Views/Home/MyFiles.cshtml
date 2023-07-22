@@ -4,6 +4,7 @@
     Layout = null;
 }
 
+
 <h3 class="mb-4">My Files</h3>
 <!-- ======= Team Section ======= -->
 <section id="team" class="team" style="background:none; padding: 0;">
@@ -27,7 +28,12 @@
                                     <i class="fa-regular fa-file-lines"></i>
                                 </span>
                                 <span>
-                                    <i class="fa-solid fa-arrow-down"></i> Download
+                                    <a style="color: #aa7100;" href="@Url.Action("DownloadFiles", "Home", new {
+                                    fileNamePdf = orderDetail.Assignment.FilePdf,
+                                    fileNameDocx = orderDetail.Assignment.FileDocx,
+                                    fileNamePptx = orderDetail.Assignment.FilePptx })">
+                                        <i class="fa-solid fa-arrow-down"></i> Download
+                                    </a>
                                 </span>
                             </div>
                         </div>

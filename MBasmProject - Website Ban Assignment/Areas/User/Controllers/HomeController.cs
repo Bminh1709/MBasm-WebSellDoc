@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.IO.Compression;
+using System.IO;
 
 namespace MBasmProject.Areas.User.Controllers
 {
@@ -16,7 +18,12 @@ namespace MBasmProject.Areas.User.Controllers
         [CustomAuthentication]
         public ActionResult Index()
         {
-            return View();
+            using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
+            {
+                int userId = (int)Session["userId"];
+                var userFound = db.Userpps.FirstOrDefault(u => u.Id == userId);
+                return View(userFound);
+            }  
         }
         [BlockDirectAccess]
         public ActionResult MyFiles()
@@ -217,5 +224,122 @@ namespace MBasmProject.Areas.User.Controllers
                 throw;
             }
         }
+
+        public FileResult DownloadFiles(string fileNamePdf, string fileNameDocx, string fileNamePptx)
+        {
+            var appDataFolder = Server.MapPath("~/App_Data");
+
+            // Combine the appDataFolder with the file names to get the full physical paths
+            string fullFilePathPdf = null;
+            if (fileNamePdf != null)
+            {
+                fullFilePathPdf = Path.Combine(appDataFolder, "Filepdf", fileNamePdf);
+            }
+            string fullFilePathDocx = null;
+            if (fileNameDocx != null)
+            {
+                fullFilePathDocx = Path.Combine(appDataFolder, "FileDocx", fileNameDocx);
+            }
+            string fullFilePathPptx = null;
+            if (fileNamePptx != null)
+            {
+                fullFilePathPptx = Path.Combine(appDataFolder, "FilePptx", fileNamePptx);
+            }
+
+            var tempFolder = Server.MapPath("~/Temp"); // Create a temporary folder to store the zip file
+            var zipFileName = Path.Combine(tempFolder, "Files.zip");
+
+            // Check if Files.zip already exists and delete it if it does
+            if (System.IO.File.Exists(zipFileName))
+            {
+                System.IO.File.Delete(zipFileName);
+            }
+
+            using (var zipArchive = ZipFile.Open(zipFileName, ZipArchiveMode.Create))
+            {
+                if (System.IO.File.Exists(fullFilePathPdf))
+                {
+                    // Get the file name without the GUID part
+                    var pdfFileNameWithoutGuid = Helper.RemoveGuidFromFileName(Path.GetFileName(fullFilePathPdf));
+
+                    // Create a new entry in the zip archive using the modified file name
+                    zipArchive.CreateEntryFromFile(fullFilePathPdf, pdfFileNameWithoutGuid);
+                }
+
+                if (System.IO.File.Exists(fullFilePathDocx))
+                {
+                    // Get the file name without the GUID part
+                    var docxFileNameWithoutGuid = Helper.RemoveGuidFromFileName(Path.GetFileName(fullFilePathDocx));
+
+                    // Create a new entry in the zip archive using the modified file name
+                    zipArchive.CreateEntryFromFile(fullFilePathDocx, docxFileNameWithoutGuid);
+                }
+
+                if (System.IO.File.Exists(fullFilePathPptx))
+                {
+                    // Get the file name without the GUID part
+                    var pptxFileNameWithoutGuid = Helper.RemoveGuidFromFileName(Path.GetFileName(fullFilePathPptx));
+
+                    // Create a new entry in the zip archive using the modified file name
+                    zipArchive.CreateEntryFromFile(fullFilePathPptx, pptxFileNameWithoutGuid);
+                }
+            }
+
+            // Send the zip file to download
+            byte[] fileBytes = System.IO.File.ReadAllBytes(zipFileName);
+            return File(fileBytes, "application/zip", "Files.zip");
+        }
+
+
+        public ActionResult UpdateProfilePhoto()
+        {
+            try
+            {
+                using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
+                {
+                    int userId = (int)Session["userId"];
+                    var userFound = db.Userpps.Find(userId);
+
+                    if (userFound == null)
+                    {
+                        return Json(new { success = false, message = "User not found." });
+                    }
+
+                    // Delete the old avatar if it exists
+                    if (!string.IsNullOrEmpty(userFound.Avatar))
+                    {
+                        string oldImagePath = Server.MapPath("~" + userFound.Avatar);
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    if (Request.Files.Count > 0 && Request.Files[0].ContentLength > 0)
+                    {
+                        var file = Request.Files[0];
+                        string rootFolder = Server.MapPath("~/assets/img/users/");
+                        string fileName = Path.GetFileName(file.FileName);
+                        string pathImage = Path.Combine(rootFolder, fileName);
+                        file.SaveAs(pathImage);
+
+                        string newPhoto = "/assets/img/users/" + fileName;
+
+                        userFound.Avatar = newPhoto;
+                        db.SaveChanges();
+
+                        return Json(new { success = true });
+                    }
+                }
+
+                return Json(new { success = false });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
     }
 }

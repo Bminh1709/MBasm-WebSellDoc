@@ -29,6 +29,7 @@ namespace MBasmProject.Models
         public string Password { get; set; }
         public string Avatar { get; set; }
         public Nullable<System.DateTime> JoinDate { get; set; }
+        public Nullable<bool> Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Feedback> Feedbacks { get; set; }

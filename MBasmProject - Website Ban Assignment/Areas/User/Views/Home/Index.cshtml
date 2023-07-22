@@ -1,4 +1,5 @@
-﻿@{
+﻿@model MBasmProject.Models.Userpp
+@{
     ViewBag.Title = "Index";
     ViewBag.ColorNav = "header-inner-pages";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,12 +23,24 @@
         @*<h1 class="mb-5">Account Settings</h1>*@
         <div class="bg-white rounded-lg d-block d-sm-flex profile-detail" style="margin-bottom: 70px;">
             <div class="profile-tab-nav border-right">
-                <div class="p-4">
-                    <div class="img-square text-center mb-3">
-                        <img src="~/assets/img/ins1.jpg" alt="Image" class="shadow">
+                @{
+                    <div class="p-4">
+                        <div class="img-square text-center mb-3">
+                            @{
+                                if (Model.Avatar == null)
+                                {
+                                    <img src="~/assets/img/elements/addavt.jpg" alt="Image" id="changeAvt" class="shadow">
+                                }
+                                else
+                                {
+                                    <img src="@Model.Avatar" style="object-fit:cover;" alt="Image" id="changeAvt" class="shadow">
+                                }
+                            }
+                        </div>
+                        <input type="file" id="uploadAvt" accept="image/*" style="display: none;">
+                        <h4 class="text-center" style=" margin-top: 70px; ">@Model.Fullname</h4>
                     </div>
-                    <h4 class="text-center" style=" margin-top: 70px; ">Bui Minh</h4>
-                </div>
+                }
                 <div class="selection-container nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <a class="nav-link active" id="myfiles-tab" data-toggle="pill" href="#myfiles" role="tab" aria-controls="myfiles" aria-selected="true">
                         <i class="fa-solid fa-file"></i>
@@ -71,6 +84,45 @@
         </div>
     </div>
 </section>
+
+<script>
+    $(document).ready(function () {
+
+        $('#changeAvt').click(function () {
+            $('#uploadAvt').click();
+        });
+
+        $('#uploadAvt').change(function () {
+            // retrieves the first file from the <input> element with the 'files' property
+            var file = this.files[0];
+            var formData = new FormData();
+            // key and value into formData
+            formData.append('file', file);
+
+            $.ajax({
+                url: '/User/Home/UpdateProfilePhoto',
+                type: 'POST',
+                data: formData,
+                // false: not automatically convert objects and arrays into a query string
+                // jQuery will not process the data. The data being sent is already in the desired format (e.g., a string, FormData object, or a file)
+                processData: false,
+                // false: automatically determine the appropriate content type based on the FormData object. This is useful when sending files or other binary data.
+                contentType: false,
+                success: function (rs) {
+                    if (rs.success) {
+                        // Handle the response from the server (e.g., display success message, reload page, etc.)
+                        alert("Profile updated successfully!");
+                        window.location.reload();
+                    }
+                    else {
+                        // Handle the error (e.g., display error message, enable the "Save Changes" button, etc.)
+                        alert("Failed to update profile. Please try again.");
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 
 
