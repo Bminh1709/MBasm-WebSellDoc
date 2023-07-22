@@ -65,7 +65,10 @@ namespace MBasmProject.Areas.Admin.Controllers
         {
             MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities();
             var item = db.Categories.Find(id);
-            return Json(new { data = item }, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult
+            {
+                Data = new { data = item }
+            };
 
         }
         [HttpPost]

@@ -73,6 +73,7 @@
     <EntitySetMapping Name="Userpps">
       <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Userpp">
         <MappingFragment StoreEntitySet="Userpp">
+          <ScalarProperty Name="Active" ColumnName="Active" />
           <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
           <ScalarProperty Name="Avatar" ColumnName="Avatar" />
           <ScalarProperty Name="Password" ColumnName="Password" />

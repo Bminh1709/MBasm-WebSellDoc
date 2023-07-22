@@ -98,6 +98,7 @@
           <Property Name="Password" Type="nvarchar" MaxLength="100" />
           <Property Name="Avatar" Type="varchar(max)" />
           <Property Name="JoinDate" Type="datetime" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <Association Name="FK_Assignment_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
@@ -164,7 +165,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Detail_Order">
-          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Order_Detail" Type="Self.Order_Detail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Order">
@@ -436,6 +439,7 @@
           <NavigationProperty Name="SavedAsms" Relationship="MBasm_AssignmentsModel.FK_SavedAsm_User" FromRole="Userpp" ToRole="SavedAsm" />
           <NavigationProperty Name="Carts" Relationship="MBasm_AssignmentsModel.FK_Cart_Userpp" FromRole="Userpp" ToRole="Cart" />
           <NavigationProperty Name="Orders" Relationship="MBasm_AssignmentsModel.FK_Order_User" FromRole="Userpp" ToRole="Order" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <Association Name="FK_Feedback_User">
           <End Type="MBasm_AssignmentsModel.Userpp" Role="Userpp" Multiplicity="0..1" />
@@ -617,6 +621,7 @@
           <EntitySetMapping Name="Userpps">
             <EntityTypeMapping TypeName="MBasm_AssignmentsModel.Userpp">
               <MappingFragment StoreEntitySet="Userpp">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
                 <ScalarProperty Name="Avatar" ColumnName="Avatar" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

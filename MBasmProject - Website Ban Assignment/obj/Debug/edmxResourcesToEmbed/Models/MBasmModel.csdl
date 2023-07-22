@@ -170,6 +170,7 @@
     <NavigationProperty Name="SavedAsms" Relationship="MBasm_AssignmentsModel.FK_SavedAsm_User" FromRole="Userpp" ToRole="SavedAsm" />
     <NavigationProperty Name="Carts" Relationship="MBasm_AssignmentsModel.FK_Cart_Userpp" FromRole="Userpp" ToRole="Cart" />
     <NavigationProperty Name="Orders" Relationship="MBasm_AssignmentsModel.FK_Order_User" FromRole="Userpp" ToRole="Order" />
+    <Property Name="Active" Type="Boolean" />
   </EntityType>
   <Association Name="FK_Feedback_User">
     <End Type="MBasm_AssignmentsModel.Userpp" Role="Userpp" Multiplicity="0..1" />

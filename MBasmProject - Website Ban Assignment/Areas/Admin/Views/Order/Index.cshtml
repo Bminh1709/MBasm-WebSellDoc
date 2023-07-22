@@ -1,0 +1,74 @@
+﻿@model IEnumerable<MBasmProject.Models.Order>
+@{
+    ViewBag.Title = "Approved orders";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="card w-100">
+    <div class="card-body p-4">
+        <div style="display:flex; justify-content:space-between;">
+            <h5 class="card-title fw-semibold mb-4">Approved orders</h5>
+            <!-- Button trigger modal -->
+            <form class="d-flex h-75" method="post">
+                <div class="form-outline">
+                    <input name="filter" placeholder="Type user's gmail..." value="@ViewBag.AOrFilter" type="search" class="form-control" style="height: 100%;" />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-nowrap mb-0 align-middle">
+                <thead class="text-dark fs-4">
+                    <tr>
+                        <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">Id</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">Full Name</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">Gmail</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">Note</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0">Order Date</h6>
+                        </th>
+                        <th class="border-bottom-0" style="width: 0;">
+                            <h6 class="fw-semibold mb-0">Delete</h6>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="trow_@item.Id">
+                            <td class="border-bottom-0"><h6 class="fw-semibold mb-0">@item.Id</h6></td>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">@item.Userpp.Fullname</h6>
+                            </td>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">@item.Userpp.Gmail</h6>
+                            </td>
+                            <td class="border-bottom-0">
+                                <p class="mb-0 fw-normal">@item.Note</p>
+                            </td>
+                            <td class="border-bottom-0">
+                                <p class="mb-0 fw-normal">@item.OrderDate</p>
+                            </td>
+                            <td class="border-bottom-0" style="text-align:center;">
+                                <a data-id="@item.Id" class="btnDeleteUser">
+                                    <i style="cursor: pointer;" class="fa-regular fa-trash-can"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

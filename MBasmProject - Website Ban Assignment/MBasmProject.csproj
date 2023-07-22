@@ -67,6 +67,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -139,7 +141,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccessController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubjectController.cs" />
     <Compile Include="Areas\User\Controllers\CartController.cs" />
     <Compile Include="Areas\User\Controllers\HomeController.cs" />
@@ -181,6 +185,11 @@
       <DependentUpon>MBasmModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MBasmModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MBasmModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MBasmModel1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MBasmModel.edmx</DependentUpon>
@@ -620,10 +629,12 @@
     <Content Include="assets\img\Creative %281%29.png" />
     <Content Include="assets\img\Creative.png" />
     <Content Include="assets\img\cta-bg.jpg" />
+    <Content Include="assets\img\elements\addAvt.jpg" />
     <Content Include="assets\img\elements\addimgicon.png" />
     <Content Include="assets\img\elements\bank.jpg" />
     <Content Include="assets\img\elements\Dark Gray Simple Happy Pi Day Flyer %281%29.png" />
     <Content Include="assets\img\elements\Dark Gray Simple Happy Pi Day Flyer.png" />
+    <Content Include="assets\img\elements\NoAvt.jpg" />
     <Content Include="assets\img\elements\people-g8eb63928e_1280.jpg" />
     <Content Include="assets\img\elements\search.png" />
     <Content Include="assets\img\favicon.png" />
@@ -758,6 +769,7 @@
     <Content Include="assets\vendor\bootstrap\js\bootstrap.min.js.map" />
     <EntityDeploy Include="Models\MBasmModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MBasmModel1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\MBasmModel.edmx.diagram">
       <DependentUpon>MBasmModel.edmx</DependentUpon>
@@ -1040,6 +1052,9 @@
     <Content Include="Areas\User\Views\Cart\Index.cshtml" />
     <Content Include="Areas\User\Views\Cart\Payment.cshtml" />
     <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Areas\Admin\Views\Client\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Unapproved.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1078,6 +1093,8 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\User\Data\" />
     <Folder Include="Areas\User\Views\Shared\" />
+    <Folder Include="assets\img\users\" />
+    <Folder Include="Temp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

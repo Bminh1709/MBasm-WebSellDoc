@@ -35,5 +35,18 @@ namespace MBasmProject.Filter.Helper
                 System.IO.File.Delete(filePath);
             }
         }
+
+        public static string RemoveGuidFromFileName(string fileName)
+        {
+            if (fileName != null)
+            {
+                string[] parts = fileName.Split('_');
+                if (parts.Length > 1)
+                {
+                    return string.Join("_", parts.Skip(1));
+                }
+            }
+            return fileName;
+        }
     }
 }
