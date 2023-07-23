@@ -1,4 +1,5 @@
-﻿using MBasmProject.Models;
+﻿using MBasmProject.Filter.Helper;
+using MBasmProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace MBasmProject.Areas.Admin.Controllers
     public class ClientController : Controller
     {
         // GET: Admin/Client
+        [CustomAuthenticationAdmin]
         public ActionResult Index(string filter)
         {
             try
@@ -30,9 +32,9 @@ namespace MBasmProject.Areas.Admin.Controllers
                     return View(lstUsers);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
             }
         }
 
@@ -56,10 +58,9 @@ namespace MBasmProject.Areas.Admin.Controllers
 
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
             }
         }
 
@@ -81,10 +82,9 @@ namespace MBasmProject.Areas.Admin.Controllers
                         return Json( new { success = false });
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
             }
         }
     }
