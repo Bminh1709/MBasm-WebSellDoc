@@ -154,6 +154,7 @@
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Filter\Helper\BlockDirectAccessAttribute.cs" />
     <Compile Include="Filter\Helper\CustomAuthentication.cs" />
+    <Compile Include="Filter\Helper\CustomAuthenticationAdmin.cs" />
     <Compile Include="Filter\Helper\CustomJsonResult.cs" />
     <Compile Include="Filter\Helper\Helper.cs" />
     <Compile Include="Global.asax.cs">

@@ -1,4 +1,5 @@
-﻿using MBasmProject.Models;
+﻿using MBasmProject.Filter.Helper;
+using MBasmProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,6 +12,7 @@ namespace MBasmProject.Areas.Admin.Controllers
     public class OrderController : Controller
     {
         // GET: Admin/Order
+        [CustomAuthenticationAdmin]
         public ActionResult Index(string filter)
         {
             try
@@ -35,6 +37,7 @@ namespace MBasmProject.Areas.Admin.Controllers
                 throw;
             }
         }
+        [CustomAuthenticationAdmin]
         public ActionResult Unapproved(string filter)
         {
             try
@@ -59,7 +62,7 @@ namespace MBasmProject.Areas.Admin.Controllers
                 throw;
             }
         }
-
+        [CustomAuthenticationAdmin]
         public ActionResult ConfirmOrder(int id)
         {
             try
@@ -79,10 +82,9 @@ namespace MBasmProject.Areas.Admin.Controllers
                     }  
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                return RedirectToAction("Index", "Error", new { num = "", errorMsg = e.Message });
             }
         }
     }

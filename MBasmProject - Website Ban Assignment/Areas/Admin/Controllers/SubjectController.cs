@@ -17,6 +17,7 @@ namespace MBasmProject.Areas.Admin.Controllers
     public class SubjectController : Controller
     {
         // GET: Admin/Subject
+        [CustomAuthenticationAdmin]
         public ActionResult Category()
         {
             try
@@ -61,6 +62,7 @@ namespace MBasmProject.Areas.Admin.Controllers
                 }
             }
         }
+        [CustomAuthenticationAdmin]
         public ActionResult GetCatById(int id)
         {
             MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities();
@@ -129,7 +131,7 @@ namespace MBasmProject.Areas.Admin.Controllers
 
 
 
-
+        [CustomAuthenticationAdmin]
         public ActionResult Assignment()
         {
             using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
@@ -211,7 +213,7 @@ namespace MBasmProject.Areas.Admin.Controllers
                 }
             }
         }
-
+        [CustomAuthenticationAdmin]
         public ActionResult GetAsmById(int id)
         {
             using (MBasm_AssignmentsEntities db = new MBasm_AssignmentsEntities())
@@ -237,7 +239,7 @@ namespace MBasmProject.Areas.Admin.Controllers
                 };
             }
         }
-
+        [CustomAuthenticationAdmin]
         public ActionResult UpdateAsm()
         {
             try
